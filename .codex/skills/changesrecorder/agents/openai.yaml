@@ -1,0 +1,4 @@
+interface:
+  display_name: "ChangesRecorder"
+  short_description: "Record feature changes under Docs/Changes."
+  default_prompt: "Use $changesrecorder when adding a new feature so a change note with Chinese body text and English structure is created under Docs/Changes."

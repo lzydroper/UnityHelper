@@ -1,0 +1,82 @@
+{
+  "output_root": "Data/KnowledgeBase",
+  "unity_docs": {
+    "seeds": [
+      "https://docs.unity3d.com/6000.4/Documentation/Manual/index.html",
+      "https://docs.unity3d.com/6000.4/Documentation/ScriptReference/index.html",
+      "https://docs.unity3d.com/Manual/index.html",
+      "https://docs.unity3d.com/ScriptReference/index.html"
+    ],
+    "use_toc": true,
+    "preserve_image_refs": true,
+    "allowed_domains": [
+      "docs.unity3d.com"
+    ],
+    "allowed_path_prefixes": [
+      "/6000.4/Documentation/Manual/",
+      "/6000.4/Documentation/ScriptReference/",
+      "/Manual/",
+      "/ScriptReference/"
+    ],
+    "max_pages": 1800,
+    "min_effective_chars": 140,
+    "delay_seconds": 0.6,
+    "user_agent": "UnityDevAssistantCourseProject/1.0"
+  },
+  "issues": {
+    "target_items": 360,
+    "delay_seconds": 1.0,
+    "max_pages_per_query": 10,
+    "github": {
+      "enabled": true,
+      "token_env": "GITHUB_TOKEN",
+      "min_relevance_score": 2,
+      "comment_fetch_per_page": 100,
+      "comment_pages": "first_last",
+      "solution_comment_limit": 6,
+      "queries": [
+        "\"NullReferenceException\" \"Unity\" is:issue in:title,body,comments",
+        "\"MissingReferenceException\" \"Unity\" is:issue in:title,body,comments",
+        "\"GetComponent\" \"null\" \"Unity\" is:issue in:title,body,comments",
+        "\"Package Manager\" \"Unity\" error is:issue in:title,body,comments",
+        "\"obsolete\" \"UnityEngine\" is:issue in:title,body,comments",
+        "\"Input System\" \"Unity\" error is:issue in:title,body,comments",
+        "\"Addressables\" \"Unity\" error is:issue in:title,body,comments",
+        "\"IL2CPP\" \"Unity\" \"build failed\" is:issue in:title,body,comments",
+        "\"Shader error\" \"Unity\" is:issue in:title,body,comments",
+        "\"pink material\" \"Unity\" is:issue in:title,body,comments",
+        "org:Unity-Technologies NullReferenceException is:issue",
+        "org:Unity-Technologies IL2CPP is:issue",
+        "org:Unity-Technologies Addressables is:issue",
+        "org:Unity-Technologies InputSystem is:issue"
+      ]
+    },
+    "stackexchange": {
+      "enabled": true,
+      "site": "stackoverflow",
+      "tagged": "unity3d",
+      "queries": [
+        "NullReferenceException",
+        "MissingReferenceException",
+        "GetComponent returns null",
+        "object reference not set",
+        "CS0246 namespace could not be found",
+        "obsolete API",
+        "deprecated API",
+        "Coroutine couldn't be started",
+        "The object of type has been destroyed",
+        "IL2CPP build failed",
+        "Package Manager error",
+        "Input System not working",
+        "shader compile error",
+        "pink material"
+      ]
+    }
+  },
+  "dify_prepare": {
+    "chunk_size_chars": 1800,
+    "chunk_overlap_chars": 180,
+    "min_chunk_chars": 220,
+    "bundle_max_mb": 14.5
+  }
+}

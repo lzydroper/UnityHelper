@@ -1,0 +1,1513 @@
+app:
+  description: v1.0.0：基于 Unity 6.4 官方文档与社区 Issue 案例的 RAG 工作流，覆盖 API 查询、报错诊断、代码建议、版本迁移、概念解释与 Lua/热更新适配兜底。
+  icon: sweat_smile
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: advanced-chat
+  name: Unity 开发智能适配助手
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.8.1@3d347885fb06f155385e6f1c30cdbfeba0c56c75278678ee218b1e95a6e97ce8
+    version: null
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.1.45@7f2b2d5b163de4c1ad8fad80e624c08d47ed7942a6a534e88e5786e65073f3ca
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions: []
+      allowed_file_types: []
+      allowed_file_upload_methods: []
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: 你好，我是 Unity 开发智能适配助手。你可以问我 Unity API 用法、报错排查、版本迁移、代码修改建议，或提供 C#/Lua 代码片段让我结合知识库分析。
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - NullReferenceException 一般怎么排查？
+    - Unity 2022 升级到 Unity 6 要注意什么？
+    - Rigidbody 和 CharacterController 有什么区别？
+    - 这段 GetComponent 代码为什么可能返回 null？
+    - C# 脚本改成 Lua 热更新时要注意什么？
+    suggested_questions_after_answer:
+      enabled: true
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: question-classifier
+      id: edge_start_intent
+      source: start
+      sourceHandle: source
+      target: intent_classifier
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_intent_api
+      source: intent_classifier
+      sourceHandle: class_api_query
+      target: kr_api_docs
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: question-classifier
+      id: edge_intent_error
+      source: intent_classifier
+      sourceHandle: class_error_debug
+      target: error_classifier
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_intent_migration
+      source: intent_classifier
+      sourceHandle: class_version_migration
+      target: kr_migration_docs
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_intent_code
+      source: intent_classifier
+      sourceHandle: class_code_advice
+      target: kr_code_advice
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_intent_concept
+      source: intent_classifier
+      sourceHandle: class_concept_explain
+      target: kr_concept_docs
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_intent_hot_update
+      source: intent_classifier
+      sourceHandle: class_hot_update
+      target: kr_hot_update
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_intent_other
+      source: intent_classifier
+      sourceHandle: class_other
+      target: kr_general
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_error_null_reference
+      source: error_classifier
+      sourceHandle: error_null_reference
+      target: kr_error_cases
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_error_lifecycle
+      source: error_classifier
+      sourceHandle: error_lifecycle
+      target: kr_error_cases
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_error_deprecated_api
+      source: error_classifier
+      sourceHandle: error_deprecated_api
+      target: kr_error_cases
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_error_namespace_package
+      source: error_classifier
+      sourceHandle: error_namespace_package
+      target: kr_error_cases
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_error_type_conversion
+      source: error_classifier
+      sourceHandle: error_type_conversion
+      target: kr_error_cases
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_error_build_il2cpp
+      source: error_classifier
+      sourceHandle: error_build_il2cpp
+      target: kr_error_cases
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_error_shader_material
+      source: error_classifier
+      sourceHandle: error_shader_material
+      target: kr_error_cases
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_error_hot_update
+      source: error_classifier
+      sourceHandle: error_hot_update_binding
+      target: kr_error_cases
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: question-classifier
+        targetType: knowledge-retrieval
+      id: edge_error_other
+      source: error_classifier
+      sourceHandle: error_other
+      target: kr_error_cases
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: edge_kr_api_llm
+      source: kr_api_docs
+      sourceHandle: source
+      target: llm_api_answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: edge_kr_error_llm
+      source: kr_error_cases
+      sourceHandle: source
+      target: llm_error_answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: edge_kr_migration_llm
+      source: kr_migration_docs
+      sourceHandle: source
+      target: llm_migration_answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: edge_kr_code_llm
+      source: kr_code_advice
+      sourceHandle: source
+      target: llm_code_answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: edge_kr_concept_llm
+      source: kr_concept_docs
+      sourceHandle: source
+      target: llm_concept_answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: edge_kr_hot_update_llm
+      source: kr_hot_update
+      sourceHandle: source
+      target: llm_hot_update_answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: edge_kr_general_llm
+      source: kr_general
+      sourceHandle: source
+      target: llm_general_answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: edge_llm_api_answer
+      source: llm_api_answer
+      sourceHandle: source
+      target: answer_api
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: edge_llm_error_answer
+      source: llm_error_answer
+      sourceHandle: source
+      target: answer_error
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: edge_llm_migration_answer
+      source: llm_migration_answer
+      sourceHandle: source
+      target: answer_migration
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: edge_llm_code_answer
+      source: llm_code_answer
+      sourceHandle: source
+      target: answer_code
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: edge_llm_concept_answer
+      source: llm_concept_answer
+      sourceHandle: source
+      target: answer_concept
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: edge_llm_hot_update_answer
+      source: llm_hot_update_answer
+      sourceHandle: source
+      target: answer_hot_update
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: edge_llm_general_answer
+      source: llm_general_answer
+      sourceHandle: source
+      target: answer_general
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: 接收用户问题、可选代码片段、版本和语言上下文。
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 代码上下文（可选）
+          max_length: 12000
+          options: []
+          required: false
+          type: paragraph
+          variable: code_context
+        - label: 当前 Unity 版本（可选）
+          options:
+          - Unity 6.4（默认）
+          - Unity 6
+          - Unity 2022 LTS
+          - Unity 2021 LTS
+          - 其他/不确定
+          required: false
+          type: select
+          variable: unity_version
+        - label: 代码语言（可选）
+          options:
+          - C#
+          - Lua/xLua/toLua
+          - ShaderLab/HLSL
+          - JavaScript
+          - 不确定
+          required: false
+          type: select
+          variable: code_language
+      height: 218
+      id: start
+      position:
+        x: 40
+        y: 260
+      positionAbsolute:
+        x: 40
+        y: 260
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        classes:
+        - id: class_api_query
+          name: API 查询：用户询问 Unity 类、方法、属性、参数、返回值、示例用法或 Scripting API。
+        - id: class_error_debug
+          name: 报错调试：用户提供异常、错误日志、堆栈、构建失败、Package Manager、IL2CPP、Shader、Input System、Addressables 等问题。
+        - id: class_version_migration
+          name: 版本迁移：用户询问 Unity 旧版本升级、弃用 API、Obsolete、Deprecated、Migration 或 Unity 2022 到 Unity 6 的变化。
+        - id: class_code_advice
+          name: 代码建议：用户提供代码并希望指出修改位置、优化写法、解释潜在 bug 或给出可参考代码。
+        - id: class_concept_explain
+          name: 概念解释：用户询问 Unity Manual 中的概念、工作流、组件原理、编辑器功能或开发流程。
+        - id: class_hot_update
+          name: Lua/热更新适配：用户询问 C# 与 Lua、xLua、toLua、热更新绑定、脚本转换或跨语言调用。
+        - id: class_other
+          name: 其他问题：无法归入以上类别，或资料明显不足的问题。
+        desc: 一级意图识别，决定主检索路径。
+        instruction: '请只输出最匹配的一个分类。若用户同时提供报错和代码，优先选择“报错调试”；若用户明确要求修改代码，选择“代码建议”；若问题涉及旧版本到新版本差异，选择“版本迁移”；若问题重点是 Lua/xLua/toLua 或热更新，选择“Lua/热更新适配”。'
+        instructions: '请只输出最匹配的一个分类。若用户同时提供报错和代码，优先选择“报错调试”；若用户明确要求修改代码，选择“代码建议”；若问题涉及旧版本到新版本差异，选择“版本迁移”；若问题重点是 Lua/xLua/toLua 或热更新，选择“Lua/热更新适配”。'
+        model:
+          completion_params:
+            temperature: 0.1
+          mode: chat
+          name: gemini-3.5-flash
+          provider: langgenius/gemini/google
+        query_variable_selector:
+        - start
+        - sys.query
+        selected: false
+        title: 一级意图识别
+        topics: []
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 422
+      id: intent_classifier
+      position:
+        x: 340
+        y: 160
+      positionAbsolute:
+        x: 340
+        y: 160
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        classes:
+        - id: error_null_reference
+          name: 空引用或对象销毁：NullReferenceException、MissingReferenceException、GetComponent 返回 null、对象已被 Destroy。
+        - id: error_lifecycle
+          name: 生命周期与协程：Awake/Start/Update 顺序、Coroutine couldn't be started、对象激活状态相关错误。
+        - id: error_deprecated_api
+          name: API 弃用或版本不兼容：obsolete、deprecated、版本升级后接口变化。
+        - id: error_namespace_package
+          name: 命名空间、包或程序集缺失：CS0246、namespace could not be found、Package Manager 依赖问题。
+        - id: error_type_conversion
+          name: 类型转换或序列化错误：InvalidCastException、类型不匹配、Inspector 序列化字段异常。
+        - id: error_build_il2cpp
+          name: 构建、平台或 IL2CPP：build failed、IL2CPP、Android/iOS/WebGL 平台构建失败。
+        - id: error_shader_material
+          name: Shader、材质或渲染：shader compile error、pink material、URP/HDRP 渲染相关问题。
+        - id: error_hot_update_binding
+          name: Lua/热更新绑定错误：xLua、toLua、C# 与 Lua 交互、绑定生成或调用失败。
+        - id: error_other
+          name: 其他 Unity 报错：无法明确归入以上类别。
+        desc: 二级错误类型识别，用于满足项目建议书中的高频错误分类能力。
+        instruction: '请根据用户问题或日志选择最接近的一类错误。若同时出现多个错误，选择最可能导致当前失败的根因类别。'
+        instructions: '请根据用户问题或日志选择最接近的一类错误。若同时出现多个错误，选择最可能导致当前失败的根因类别。'
+        model:
+          completion_params:
+            temperature: 0.1
+          mode: chat
+          name: gemini-3.5-flash
+          provider: langgenius/gemini/google
+        query_variable_selector:
+        - start
+        - sys.query
+        selected: false
+        title: 二级错误类型识别
+        topics: []
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 455
+      id: error_classifier
+      position:
+        x: 650
+        y: 20
+      positionAbsolute:
+        x: 650
+        y: 20
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - qhEojNyf+GxF08kmF4U2lUOVU8/8Tc1D/X4tZxCcgFA/vBdjFWqOMN0ZVfoPMU3x
+        desc: Unity_Official_Docs：官方 Manual 与 Scripting API。
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: qwen3-rerank
+            provider: langgenius/tongyi/tongyi
+          score_threshold: null
+          top_k: 5
+          weights:
+            keyword_setting:
+              keyword_weight: 0.3
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0.7
+        query_attachment_selector: []
+        query_variable_selector:
+        - start
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: 检索：官方 API 文档
+        type: knowledge-retrieval
+      height: 133
+      id: kr_api_docs
+      position:
+        x: 980
+        y: -180
+      positionAbsolute:
+        x: 980
+        y: -180
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - v1gvgT4tRXC8iSS4YHHd3F/foIqbpBOogqp4jwikQ9Xxp0OFxUnUduFFfVnNGP2U
+        - qhEojNyf+GxF08kmF4U2lUOVU8/8Tc1D/X4tZxCcgFA/vBdjFWqOMN0ZVfoPMU3x
+        desc: Unity_Issues_Cases + Unity_Official_Docs；当前导出文件未提供独立 Unity_Error_Cases ID。
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: qwen3-rerank
+            provider: langgenius/tongyi/tongyi
+          score_threshold: null
+          top_k: 5
+          weights:
+            keyword_setting:
+              keyword_weight: 0.55
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0.45
+        query_attachment_selector: []
+        query_variable_selector:
+        - start
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: 检索：报错与 Issues 案例
+        type: knowledge-retrieval
+      height: 177
+      id: kr_error_cases
+      position:
+        x: 980
+        y: 20
+      positionAbsolute:
+        x: 980
+        y: 20
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - qhEojNyf+GxF08kmF4U2lUOVU8/8Tc1D/X4tZxCcgFA/vBdjFWqOMN0ZVfoPMU3x
+        desc: Unity_Official_Docs：优先召回 Deprecated、Obsolete、Migration、Upgrade 相关内容。
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: qwen3-rerank
+            provider: langgenius/tongyi/tongyi
+          score_threshold: null
+          top_k: 5
+          weights:
+            keyword_setting:
+              keyword_weight: 0.45
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0.55
+        query_attachment_selector: []
+        query_variable_selector:
+        - start
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: 检索：版本迁移文档
+        type: knowledge-retrieval
+      height: 133
+      id: kr_migration_docs
+      position:
+        x: 980
+        y: 250
+      positionAbsolute:
+        x: 980
+        y: 250
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - qhEojNyf+GxF08kmF4U2lUOVU8/8Tc1D/X4tZxCcgFA/vBdjFWqOMN0ZVfoPMU3x
+        - v1gvgT4tRXC8iSS4YHHd3F/foIqbpBOogqp4jwikQ9Xxp0OFxUnUduFFfVnNGP2U
+        desc: Unity_Official_Docs + Unity_Issues_Cases：结合代码 API 与社区经验。
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: qwen3-rerank
+            provider: langgenius/tongyi/tongyi
+          score_threshold: null
+          top_k: 5
+          weights:
+            keyword_setting:
+              keyword_weight: 0.4
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0.6
+        query_attachment_selector: []
+        query_variable_selector:
+        - start
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: 检索：代码建议资料
+        type: knowledge-retrieval
+      height: 177
+      id: kr_code_advice
+      position:
+        x: 980
+        y: 430
+      positionAbsolute:
+        x: 980
+        y: 430
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - qhEojNyf+GxF08kmF4U2lUOVU8/8Tc1D/X4tZxCcgFA/vBdjFWqOMN0ZVfoPMU3x
+        desc: Unity_Official_Docs：Manual 概念与工作流。
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: qwen3-rerank
+            provider: langgenius/tongyi/tongyi
+          score_threshold: null
+          top_k: 5
+          weights:
+            keyword_setting:
+              keyword_weight: 0.25
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0.75
+        query_attachment_selector: []
+        query_variable_selector:
+        - start
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: 检索：Manual 概念文档
+        type: knowledge-retrieval
+      height: 133
+      id: kr_concept_docs
+      position:
+        x: 980
+        y: 650
+      positionAbsolute:
+        x: 980
+        y: 650
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - qhEojNyf+GxF08kmF4U2lUOVU8/8Tc1D/X4tZxCcgFA/vBdjFWqOMN0ZVfoPMU3x
+        - v1gvgT4tRXC8iSS4YHHd3F/foIqbpBOogqp4jwikQ9Xxp0OFxUnUduFFfVnNGP2U
+        desc: 当前知识库未包含独立 xLua/toLua 手册，本分支使用官方文档与 Issues 进行保守回答。
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: qwen3-rerank
+            provider: langgenius/tongyi/tongyi
+          score_threshold: null
+          top_k: 5
+          weights:
+            keyword_setting:
+              keyword_weight: 0.5
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0.5
+        query_attachment_selector: []
+        query_variable_selector:
+        - start
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: 检索：Lua 与热更新适配
+        type: knowledge-retrieval
+      height: 177
+      id: kr_hot_update
+      position:
+        x: 980
+        y: 830
+      positionAbsolute:
+        x: 980
+        y: 830
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids:
+        - qhEojNyf+GxF08kmF4U2lUOVU8/8Tc1D/X4tZxCcgFA/vBdjFWqOMN0ZVfoPMU3x
+        - v1gvgT4tRXC8iSS4YHHd3F/foIqbpBOogqp4jwikQ9Xxp0OFxUnUduFFfVnNGP2U
+        desc: Unity_Official_Docs + Unity_Issues_Cases：兜底检索。
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: reranking_model
+          reranking_model:
+            model: qwen3-rerank
+            provider: langgenius/tongyi/tongyi
+          score_threshold: null
+          top_k: 5
+          weights:
+            keyword_setting:
+              keyword_weight: 0.35
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0.65
+        query_attachment_selector: []
+        query_variable_selector:
+        - start
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: 检索：通用资料
+        type: knowledge-retrieval
+      height: 177
+      id: kr_general
+      position:
+        x: 980
+        y: 1050
+      positionAbsolute:
+        x: 980
+        y: 1050
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - kr_api_docs
+          - result
+        desc: 官方 API 回答生成。
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 5
+        model:
+          completion_params:
+            temperature: 0.2
+          mode: chat
+          name: gemini-3.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: api-system-prompt-v100
+          role: system
+          text: '你是 Unity 开发智能适配助手，专长是 Unity API 与官方文档解释。请仅基于检索资料和用户输入回答，不要编造 API。当前官方文档知识库主要基于 Unity 6.4；如果用户指定旧版本，请提醒旧版本差异覆盖有限。
+
+
+            用户当前 Unity 版本：{{#start.unity_version#}}
+
+            用户代码语言：{{#start.code_language#}}
+
+            用户代码上下文：
+
+            {{#start.code_context#}}
+
+
+            检索资料：
+
+            {{#context#}}
+
+
+            回答结构：
+
+            1. 问题判断
+
+            2. API 用法或参数说明
+
+            3. 常见注意事项
+
+            4. 可参考代码
+
+            5. 参考来源
+
+
+            参考来源必须来自检索资料中的标题或 URL。'
+        - id: api-user-prompt-v100
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: 生成回答：API 查询
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 115
+      id: llm_api_answer
+      position:
+        x: 1300
+        y: -180
+      positionAbsolute:
+        x: 1300
+        y: -180
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - kr_error_cases
+          - result
+        desc: 错误诊断回答生成。
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 5
+        model:
+          completion_params:
+            temperature: 0.2
+          mode: chat
+          name: gemini-3.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: error-system-prompt-v100
+          role: system
+          text: '你是 Unity 报错诊断助手。请根据用户问题、代码、日志和检索资料，输出可执行的排查与修复方案。当前导出工作流只包含 Unity_Official_Docs 与 Unity_Issues_Cases；如果资料不足，请明确要求用户补充完整错误堆栈、Unity 版本、平台、相关代码。
+
+
+            用户当前 Unity 版本：{{#start.unity_version#}}
+
+            用户代码语言：{{#start.code_language#}}
+
+            用户代码上下文：
+
+            {{#start.code_context#}}
+
+
+            检索资料：
+
+            {{#context#}}
+
+
+            回答结构：
+
+            1. 错误类型判断
+
+            2. 最可能原因
+
+            3. 排查步骤
+
+            4. 至少两种修复方案及适用场景
+
+            5. 可参考代码
+
+            6. 参考来源
+
+
+            如果用户提供代码，必须指出具体修改位置。'
+        - id: error-user-prompt-v100
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: 生成回答：报错诊断
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 115
+      id: llm_error_answer
+      position:
+        x: 1300
+        y: 20
+      positionAbsolute:
+        x: 1300
+        y: 20
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - kr_migration_docs
+          - result
+        desc: 版本迁移回答生成。
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 5
+        model:
+          completion_params:
+            temperature: 0.2
+          mode: chat
+          name: gemini-3.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: migration-system-prompt-v100
+          role: system
+          text: '你是 Unity 版本迁移助手。请基于检索资料说明旧 API、弃用信息、迁移风险和 Unity 6.4 下的推荐做法。当前官方文档知识库主要是 Unity 6.4；如果用户询问 Unity 2022/2021 到 Unity 6 的迁移，而检索资料没有明确旧版本依据，请说明不能保证完整覆盖旧版本差异。
+
+
+            用户当前 Unity 版本：{{#start.unity_version#}}
+
+            用户代码语言：{{#start.code_language#}}
+
+            用户代码上下文：
+
+            {{#start.code_context#}}
+
+
+            检索资料：
+
+            {{#context#}}
+
+
+            回答结构：
+
+            1. 迁移结论
+
+            2. 受影响 API 或功能
+
+            3. 推荐替代方案
+
+            4. 修改示例
+
+            5. 风险与验证建议
+
+            6. 参考来源'
+        - id: migration-user-prompt-v100
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: 生成回答：版本迁移
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 115
+      id: llm_migration_answer
+      position:
+        x: 1300
+        y: 250
+      positionAbsolute:
+        x: 1300
+        y: 250
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - kr_code_advice
+          - result
+        desc: 代码感知回答生成。
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 5
+        model:
+          completion_params:
+            temperature: 0.2
+          mode: chat
+          name: gemini-3.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: code-system-prompt-v100
+          role: system
+          text: '你是 Unity C# / Lua 代码审查与修改建议助手。请结合用户代码和检索资料回答，必须指出具体修改位置、原因和风险。不要生成与检索资料冲突的 API 或不存在的类名。
+
+
+            用户当前 Unity 版本：{{#start.unity_version#}}
+
+            用户代码语言：{{#start.code_language#}}
+
+            用户代码上下文：
+
+            {{#start.code_context#}}
+
+
+            检索资料：
+
+            {{#context#}}
+
+
+            回答结构：
+
+            1. 代码问题判断
+
+            2. 具体修改位置
+
+            3. 修改后的参考代码
+
+            4. 为什么这样改
+
+            5. 测试与回归建议
+
+            6. 参考来源'
+        - id: code-user-prompt-v100
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: 生成回答：代码建议
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 115
+      id: llm_code_answer
+      position:
+        x: 1300
+        y: 430
+      positionAbsolute:
+        x: 1300
+        y: 430
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - kr_concept_docs
+          - result
+        desc: 概念解释回答生成。
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 5
+        model:
+          completion_params:
+            temperature: 0.2
+          mode: chat
+          name: gemini-3.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: concept-system-prompt-v100
+          role: system
+          text: '你是 Unity 概念解释助手。请用面向独立游戏开发者的方式解释概念，优先使用检索资料中的 Manual 内容；资料不足时说明缺口。
+
+
+            用户当前 Unity 版本：{{#start.unity_version#}}
+
+            用户代码语言：{{#start.code_language#}}
+
+            用户代码上下文：
+
+            {{#start.code_context#}}
+
+
+            检索资料：
+
+            {{#context#}}
+
+
+            回答结构：
+
+            1. 简明定义
+
+            2. 工作原理或使用场景
+
+            3. 常见误区
+
+            4. 可参考做法
+
+            5. 参考来源'
+        - id: concept-user-prompt-v100
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: 生成回答：概念解释
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 115
+      id: llm_concept_answer
+      position:
+        x: 1300
+        y: 650
+      positionAbsolute:
+        x: 1300
+        y: 650
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - kr_hot_update
+          - result
+        desc: Lua 与热更新适配回答生成。
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 5
+        model:
+          completion_params:
+            temperature: 0.2
+          mode: chat
+          name: gemini-3.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: hot-update-system-prompt-v100
+          role: system
+          text: '你是 Unity Lua/热更新适配助手。项目建议书要求支持 C# 与 Lua 热更概念查询，但当前导出文件未提供独立 xLua/toLua 知识库。请基于现有检索资料保守回答；若资料没有覆盖具体框架行为，不要编造框架 API，应提示需要补充 xLua/toLua 专项手册。
+
+
+            用户当前 Unity 版本：{{#start.unity_version#}}
+
+            用户代码语言：{{#start.code_language#}}
+
+            用户代码上下文：
+
+            {{#start.code_context#}}
+
+
+            检索资料：
+
+            {{#context#}}
+
+
+            回答结构：
+
+            1. 需求判断
+
+            2. C# 与 Lua/热更新适配要点
+
+            3. 当前知识库能确认的信息
+
+            4. 风险与缺口
+
+            5. 建议补充的资料
+
+            6. 参考来源'
+        - id: hot-update-user-prompt-v100
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: 生成回答：Lua/热更新
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 115
+      id: llm_hot_update_answer
+      position:
+        x: 1300
+        y: 830
+      positionAbsolute:
+        x: 1300
+        y: 830
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - kr_general
+          - result
+        desc: 通用兜底回答生成。
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 5
+        model:
+          completion_params:
+            temperature: 0.2
+          mode: chat
+          name: gemini-3.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: general-system-prompt-v100
+          role: system
+          text: '你是 Unity 开发智能适配助手。请基于检索资料回答。若问题超出 Unity 开发范围，或检索资料不足，请直接说明无法从当前知识库确认，并建议用户补充 Unity 版本、错误日志、代码片段或目标平台。
+
+
+            用户当前 Unity 版本：{{#start.unity_version#}}
+
+            用户代码语言：{{#start.code_language#}}
+
+            用户代码上下文：
+
+            {{#start.code_context#}}
+
+
+            检索资料：
+
+            {{#context#}}
+
+
+            回答结构：
+
+            1. 问题判断
+
+            2. 当前资料能确认的信息
+
+            3. 建议下一步
+
+            4. 参考来源'
+        - id: general-user-prompt-v100
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: 生成回答：通用兜底
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 115
+      id: llm_general_answer
+      position:
+        x: 1300
+        y: 1050
+      positionAbsolute:
+        x: 1300
+        y: 1050
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm_api_answer.text#}}'
+        desc: ''
+        selected: false
+        title: 回复：API 查询
+        type: answer
+        variables: []
+      height: 102
+      id: answer_api
+      position:
+        x: 1600
+        y: -180
+      positionAbsolute:
+        x: 1600
+        y: -180
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm_error_answer.text#}}'
+        desc: ''
+        selected: false
+        title: 回复：报错诊断
+        type: answer
+        variables: []
+      height: 102
+      id: answer_error
+      position:
+        x: 1600
+        y: 20
+      positionAbsolute:
+        x: 1600
+        y: 20
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm_migration_answer.text#}}'
+        desc: ''
+        selected: false
+        title: 回复：版本迁移
+        type: answer
+        variables: []
+      height: 102
+      id: answer_migration
+      position:
+        x: 1600
+        y: 250
+      positionAbsolute:
+        x: 1600
+        y: 250
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm_code_answer.text#}}'
+        desc: ''
+        selected: false
+        title: 回复：代码建议
+        type: answer
+        variables: []
+      height: 102
+      id: answer_code
+      position:
+        x: 1600
+        y: 430
+      positionAbsolute:
+        x: 1600
+        y: 430
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm_concept_answer.text#}}'
+        desc: ''
+        selected: false
+        title: 回复：概念解释
+        type: answer
+        variables: []
+      height: 102
+      id: answer_concept
+      position:
+        x: 1600
+        y: 650
+      positionAbsolute:
+        x: 1600
+        y: 650
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm_hot_update_answer.text#}}'
+        desc: ''
+        selected: false
+        title: 回复：Lua/热更新
+        type: answer
+        variables: []
+      height: 102
+      id: answer_hot_update
+      position:
+        x: 1600
+        y: 830
+      positionAbsolute:
+        x: 1600
+        y: 830
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm_general_answer.text#}}'
+        desc: ''
+        selected: false
+        title: 回复：通用兜底
+        type: answer
+        variables: []
+      height: 102
+      id: answer_general
+      position:
+        x: 1600
+        y: 1050
+      positionAbsolute:
+        x: 1600
+        y: 1050
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -76
+      y: 120
+      zoom: 0.63
+  rag_pipeline_variables: []

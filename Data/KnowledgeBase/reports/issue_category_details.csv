@@ -1,0 +1,361 @@
+﻿category,source,title,url
+空引用与对象生命周期,github_issue,Game crash (on Linux) TM:PE V11 STABLE,https://github.com/CitiesSkylinesMods/TMPE/issues/817
+API弃用与版本迁移,github_issue,WinUI 3.0 roadmap - we need your input!,https://github.com/microsoft/microsoft-ui-xaml/issues/717
+编译与命名空间,github_issue,Tracking issue for illumos and Solaris x86-64 port work,https://github.com/dotnet/runtime/issues/34944
+空引用与对象生命周期,github_issue,AOT-stubs for Bolt Community Addons in Addressables on Android,https://github.com/RealityStop/Bolt.Addons.Community/issues/67
+空引用与对象生命周期,github_issue,User- and developer-friendly way of distributing tasks using UtilPack.NuGet.MSBuild task factory,https://github.com/stazz/UtilPack/issues/7
+空引用与对象生命周期,github_issue,Unity 2018.2 Application.isWebPlayer error in ParseInitializeBehaviour...,https://github.com/parse-community/Parse-SDK-dotNET/issues/294
+空引用与对象生命周期,github_issue,Problem with Spawning at runtime and with NetworkedTransform,https://github.com/Unity-Technologies/com.unity.netcode.gameobjects/issues/46
+空引用与对象生命周期,github_issue,Issue getting VideoAdsSample to display ads when built as Windows Store App,https://github.com/microsoft/unityplugins/issues/21
+空引用与对象生命周期,github_issue,Game slows down/freezes after playing a while,https://github.com/TeamPorcupine/ProjectPorcupine/issues/796
+空引用与对象生命周期,github_issue,allow references to structs to be stored in fields of ref structs,https://github.com/dotnet/csharplang/issues/1147
+空引用与对象生命周期,github_issue,Google Play Games Services plugin v10,https://github.com/playgameservices/play-games-plugin-for-unity/issues/2687
+空引用与对象生命周期,github_issue,Auth cause ClassNotFoundException on GameHelper.,https://github.com/playgameservices/play-games-plugin-for-unity/issues/81
+空引用与对象生命周期,github_issue,Spawning A Player and a Non-Player Object,https://github.com/Unity-Technologies/com.unity.netcode.gameobjects/issues/40
+空引用与对象生命周期,github_issue,Game Crashed at Sign In,https://github.com/playgameservices/play-games-plugin-for-unity/issues/1724
+空引用与对象生命周期,github_issue,Failure of the main functions of the server after the last update.,https://github.com/SmartlyDressedGames/Unturned-3.x-Community/issues/4760
+空引用与对象生命周期,github_issue,(NO LONGER ACTIVE),https://github.com/SchuhBaum/SimplifiedMoveset/issues/12
+空引用与对象生命周期,github_issue,PSA: NetTransport Rewrite,https://github.com/SmartlyDressedGames/Unturned-3.x-Community/issues/1971
+空引用与对象生命周期,github_issue,iOS authentication is failing in latest version,https://github.com/elringus/unity-google-drive/issues/18
+空引用与对象生命周期,github_issue,"Mono.Debugger hangs Visual Studio 2017 for ~3min on the ""Starting Android application"" step",https://github.com/dotnet/android/issues/1664
+空引用与对象生命周期,github_issue,MacOS arm64 (Apple Silicon) Support - Valheim,https://github.com/BepInEx/BepInEx/issues/899
+空引用与对象生命周期,github_issue,New update seems to have caused issues on Linux 2021.1.9f1 editor. Crashes and closes editor right away.,https://github.com/neon-age/Smart-Inspector/issues/8
+空引用与对象生命周期,github_issue,"Persistent Error: ""Ads still not loaded""",https://github.com/EvilMindDevs/hms-unity-plugin/issues/163
+空引用与对象生命周期,github_issue,trigger object with a note in Unity,https://github.com/melanchall/drywetmidi/issues/85
+空引用与对象生命周期,github_issue,3D Keyboard,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/546
+空引用与对象生命周期,github_issue,Dissonance issues with players disconnecting and reconnecting,https://github.com/Placeholder-Software/Dissonance/issues/55
+空引用与对象生命周期,github_issue,SocketCluster for Unity3D,https://github.com/sacOO7/SocketclusterClientDotNet/issues/4
+空引用与对象生命周期,github_issue,[feature] Magic Leap Support,https://github.com/Placeholder-Software/Dissonance/issues/125
+空引用与对象生命周期,github_issue,Beat Saber (620980),https://github.com/ValveSoftware/Proton/issues/6638
+构建与IL2CPP,github_issue,"Crashlytics not sending any crash reports, getting ""failed to retrieve settings"" error on logcat.",https://github.com/firebase/quickstart-unity/issues/798
+空引用与对象生命周期,github_issue,NullReferenceException at GoogleSignIn_Result,https://github.com/Thaina/google-signin-unity/issues/46
+空引用与对象生命周期,github_issue,Playback produces unexpected results in Unity,https://github.com/melanchall/drywetmidi/issues/31
+空引用与对象生命周期,github_issue,Unity SDK - S3 PostObject Amazon.Runtime.Internal.HttpErrorResponseException when using S3CannedACL.PublicRead,https://github.com/aws/aws-sdk-net/issues/332
+空引用与对象生命周期,github_issue,IndexOutOfRangeException: Array index is out of range.,https://github.com/Demigiant/dotween/issues/16
+空引用与对象生命周期,github_issue,Signal Handling,https://github.com/FEX-Emu/FEX/issues/1682
+空引用与对象生命周期,github_issue,Amazon Polly for Unity,https://github.com/aws/aws-sdk-net/issues/627
+空引用与对象生命周期,github_issue,Allow Controller to directly interact with Unity UI elements,https://github.com/ExtendRealityLtd/VRTK/issues/639
+空引用与对象生命周期,github_issue,Help with Directions API,https://github.com/mapbox/mapbox-unity-sdk/issues/531
+空引用与对象生命周期,github_issue,[BUG] VPM cannot find supported editor for 2022.3.6f1 on Linux,https://github.com/vrchat-community/creator-companion/issues/408
+空引用与对象生命周期,github_issue,HoloLens and MapBox issue,https://github.com/mapbox/mapbox-unity-sdk/issues/734
+空引用与对象生命周期,github_issue,win10 build error,https://github.com/homuler/MediaPipeUnityPlugin/issues/358
+空引用与对象生命周期,github_issue,"Plugin Loads but ""Empty""",https://github.com/sinai-dev/UnityExplorer/issues/7
+空引用与对象生命周期,github_issue,Failed to spawn Network Object when Client Joins,https://github.com/Unity-Technologies/com.unity.netcode.gameobjects/issues/3897
+空引用与对象生命周期,github_issue,Create a new Resource (resx) file an error occurs,https://github.com/dotnet/project-system/issues/1409
+空引用与对象生命周期,github_issue,ARSessionOrigin has no member Raycast,https://github.com/TheUnityWorkbench/tuw-arfoundation-demo/issues/1
+空引用与对象生命周期,github_issue,[BUG] - Knarr cannot resolve YML when installed through R2/Thunderstore,https://github.com/sbtoonz/Trader_2.0/issues/18
+空引用与对象生命周期,github_issue,serial port trouble with .NET 3.5 in Unity,https://github.com/PyramidTechnologies/netPyramid-RS-232/issues/1
+空引用与对象生命周期,github_issue,NullReferenceException Crashes the build,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/1058
+空引用与对象生命周期,github_issue,Engine crashes on stop,https://github.com/InitialPrefabs/nimgui/issues/8
+空引用与对象生命周期,github_issue,AndroidJavaProxy breaks with Unity 2022.2.0+ when using fuw-2022.2.0,https://github.com/juicycleff/flutter-unity-view-widget/issues/836
+空引用与对象生命周期,github_issue,SendCodeRequest Method Failed,https://github.com/sochix/TLSharp/issues/17
+空引用与对象生命周期,github_issue,The sample app crashes on Samsung 22 Ultra,https://github.com/homuler/MediaPipeUnityPlugin/issues/821
+空引用与对象生命周期,github_issue,Get binding as a friendly user string,https://github.com/ValveSoftware/openvr/issues/1017
+空引用与对象生命周期,github_issue,Issues using the keyboard prefab on PC,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/1370
+空引用与对象生命周期,github_issue,Crash on F5,https://github.com/unitycontainer/microsoft-dependency-injection/issues/40
+空引用与对象生命周期,github_issue,Mac OS: Firebase crashing Unity2017.4.1f1 with .NET 4.6,https://github.com/firebase/quickstart-unity/issues/160
+编译与命名空间,github_issue,Flash export,https://github.com/coolboy1/dotween/issues/2
+编译与命名空间,github_issue,Flash export,https://github.com/kanon1109/dotween/issues/2
+编译与命名空间,github_issue,Flash export,https://github.com/tothegons/dotween/issues/2
+编译与命名空间,github_issue,Flash export,https://github.com/MoDDiB/dotween/issues/2
+空引用与对象生命周期,github_issue,dll not found,https://github.com/labstreaminglayer/LSL4Unity/issues/15
+空引用与对象生命周期,github_issue,Pass custom callback as parameter when invoking a method,https://github.com/vfsfitvnm/frida-il2cpp-bridge/issues/283
+空引用与对象生命周期,github_issue,Could we have unitypackage,https://github.com/couchbase/couchbase-lite-net/issues/1018
+空引用与对象生命周期,github_issue,Unity : S3Example GetObjects not working. User-Agent header issue,https://github.com/aws/aws-sdk-net/issues/643
+空引用与对象生命周期,github_issue,Problem spawning an object with a parent,https://github.com/FirstGearGames/FishNet/issues/435
+空引用与对象生命周期,github_issue,Does this UA .Net standard support Unity's IL2CPP Scripting Backend? HELP !!!!,https://github.com/OPCFoundation/UA-.NETStandard/issues/760
+空引用与对象生命周期,github_issue,Upgrade to Prism 8.1.97,https://github.com/AvaloniaCommunity/Prism.Avalonia/issues/9
+空引用与对象生命周期,github_issue,Object reference not set to an instance of an object.,https://github.com/SmartlyDressedGames/Unturned-3.x-Community/issues/2279
+空引用与对象生命周期,github_issue,[BUG]: It is not possible to make connection between different (public) networks,https://github.com/Unity-Technologies/UnityRenderStreaming/issues/907
+空引用与对象生命周期,github_issue,BUG: Plugins Failing to Detect CWD,https://github.com/Flow-Launcher/Flow.Launcher/issues/2299
+空引用与对象生命周期,github_issue,Game Crashes Whenever Entering A Battle Scene,https://github.com/suriyun-production/turnbase-rpg-docs/issues/246
+空引用与对象生命周期,github_issue,"On Unity, compiling the Android version to il2cpp causes an ExecutionEngineException at runtime",https://github.com/aws/aws-sdk-net/issues/477
+空引用与对象生命周期,github_issue,Unity clients fail with IL2CPP builds,https://github.com/nats-io/nats.net.v1/issues/361
+空引用与对象生命周期,github_issue,PostAsync method does not work in WebGL due to System.Reflection.Emit reference,https://github.com/graphql-dotnet/graphql-client/issues/133
+空引用与对象生命周期,github_issue,Vive input utility make all my actions not work anymore,https://github.com/ViveSoftware/ViveInputUtility-Unity/issues/154
+空引用与对象生命周期,github_issue,Rider Inop in 2019.2b6?,https://github.com/JetBrains/resharper-unity/issues/1233
+空引用与对象生命周期,github_issue,System.NullReferenceException: Object reference not set to an instance of an object. in latest nuget,https://github.com/unitycontainer/microsoft-dependency-injection/issues/12
+编译与命名空间,github_issue,Unable to use DocFx on Unity,https://github.com/NormandErwan/DocFxForUnity/issues/9
+空引用与对象生命周期,github_issue,[Unity][S3] No way to measure download progress,https://github.com/aws/aws-sdk-net/issues/547
+空引用与对象生命周期,github_issue,Preventing being ran over by other mods,https://github.com/TweakScale/TweakScale/issues/31
+空引用与对象生命周期,github_issue,Cannot build AAR on Windows,https://github.com/homuler/MediaPipeUnityPlugin/issues/80
+空引用与对象生命周期,github_issue,Dooblys big ̶d̶̶̶a̶̶̶y̶̶̶ days of bug squashin B: 220,https://github.com/unitystation/unitystation/issues/3863
+API弃用与版本迁移,github_issue,[PLEASE READ] Some Unity v6.3 games imcompatibility,https://github.com/yukieiji/UnityExplorer/issues/104
+Shader与渲染,github_issue,Quest 2 Crashes on Selecting NDI Source - Unity 2022 Build,https://github.com/keijiro/KlakNDI/issues/200
+空引用与对象生命周期,github_issue,AuthServiceDemo. GetCurrentUser I always get a null pointer exception.,https://github.com/EvilMindDevs/hms-unity-plugin/issues/352
+空引用与对象生命周期,github_issue,KSP 1.9.x resets resources to prefab while cloning parts,https://github.com/net-lisias-ksp/KSP-Recall/issues/1
+空引用与对象生命周期,github_issue,Unity package path & dlls,https://github.com/Unity-Technologies/com.unity.netcode.gameobjects/issues/34
+空引用与对象生命周期,github_issue,Unity 2019 UWP Hololens compatibility,https://github.com/dwhit/ros-sharp/issues/3
+空引用与对象生命周期,github_issue,[LSP] languageserver not working with vim/neovim+lsp plugins,https://github.com/OmniSharp/omnisharp-roslyn/issues/1191
+空引用与对象生命周期,github_issue,NullReferenceException: Object reference not set to an instance of an object Unity.Netcode.FixedStringSerializer`1[T].WriteDelta,https://github.com/Unity-Technologies/com.unity.netcode.gameobjects/issues/2920
+空引用与对象生命周期,github_issue,[10.0.4][Server/User issue] Black Screen when logging in. Only server restart fixes it.,https://github.com/StrangeLoopGames/EcoIssues/issues/24511
+空引用与对象生命周期,github_issue,Server wont start since new update,https://github.com/SmartlyDressedGames/Unturned-3.x-Community/issues/2935
+空引用与对象生命周期,github_issue,NREs in pointer inspectors,https://github.com/XRTK/com.xrtk.sdk/issues/89
+空引用与对象生命周期,github_issue,zh-cn zh-tw,https://github.com/bbepis/XUnity.AutoTranslator/issues/2
+空引用与对象生命周期,github_issue,Update 2.75.5 breaks saving the game,https://github.com/Touhma/DSP_Galactic_Scale/issues/250
+空引用与对象生命周期,github_issue,Use ARCamera as input for MediaPipe?,https://github.com/homuler/MediaPipeUnityPlugin/issues/343
+空引用与对象生命周期,github_issue,안녕하세요 InfiniteScroll 시스템 중 Dynamic Item Size에 대한 궁금증입니다.,https://github.com/nhn/gpm.unity/issues/165
+空引用与对象生命周期,github_issue,Sample scenes not working in 1.1.4,https://github.com/push-pop/Unity-MVVM/issues/78
+空引用与对象生命周期,github_issue,Not correctly using Watson service URLs,https://github.com/snhwang/Unity-Watson-STT-Assistant-TTS/issues/1
+空引用与对象生命周期,github_issue,Cannot export to fbx anymore with 2018.3b10,https://github.com/LogicalError/realtime-CSG-for-unity/issues/277
+空引用与对象生命周期,github_issue,No sound heard if audio source clips through solid geometry,https://github.com/ValveSoftware/steam-audio/issues/12
+空引用与对象生命周期,github_issue,Jar Resolver (provided in 0.9.35) doesn't work,https://github.com/playgameservices/play-games-plugin-for-unity/issues/1428
+空引用与对象生命周期,github_issue,Can't build in Unity,https://github.com/JoshClose/CsvHelper/issues/1390
+空引用与对象生命周期,github_issue,[BUG] KeyNotFoundException: The given key was not present in the dictionary,https://github.com/ValveSoftware/steamvr_unity_plugin/issues/596
+空引用与对象生命周期,github_issue,Null reference exception in WebGL glb export but works fine in Editor,https://github.com/KhronosGroup/UnityGLTF/issues/782
+空引用与对象生命周期,github_issue,"MA Proxy Renderer for ""object name""としてアバター内の全てのSkinned MeshがScene内に生成される",https://github.com/bdunderscore/modular-avatar/issues/1055
+空引用与对象生命周期,github_issue,NullReferenceException: Object reference not set to an instance of an object Fish,https://github.com/thedefside/BetterUI/issues/39
+空引用与对象生命周期,github_issue,"Unity.ResolutionFailedException: RestSharp.Athuenticators.IAuthenticator, is an interface....Are you missing a type mapping?",https://github.com/AutomateThePlanet/BELLATRIX/issues/16
+包管理,github_issue,Version 3.5.25.0 has dependency on Microsoft.Bcl.AsyncInterfaces [This breaks Unity Support],https://github.com/aws/aws-sdk-net/issues/1722
+编译与命名空间,github_issue,diagnostics cannot build using the .net backend,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/2874
+空引用与对象生命周期,github_issue,Model trained with Tensorflow 1.7.1 not working,https://github.com/Syn-McJ/TFClassify-Unity/issues/11
+空引用与对象生命周期,github_issue,Building error,https://github.com/umasteeringgroup/UMA/issues/8
+空引用与对象生命周期,github_issue,"Banner Ad is OK, but RewardBasedAd doesn't show",https://github.com/googleads/googleads-mobile-unity/issues/377
+空引用与对象生命周期,github_issue,"BobDoleOwndU If you can help me, I can support you with a good amount through PayPal.",https://github.com/BobDoleOwndU/FMDL-Studio-v2/issues/26
+空引用与对象生命周期,github_issue,Unity3D - iOS is not supported on LiteDB v4.1,https://github.com/litedb-org/LiteDB/issues/844
+空引用与对象生命周期,github_issue,Status of this project,https://github.com/arcadia-unity/Arcadia/issues/388
+空引用与对象生命周期,github_issue,AssetDatabase.Refresh() - NullReferenceException,https://github.com/playgameservices/play-games-plugin-for-unity/issues/1713
+空引用与对象生命周期,github_issue,"Error on ""Create an AR game using Unity's AR Foundation""-example",https://github.com/google-ar/arcore-unity-extensions/issues/57
+空引用与对象生命周期,github_issue,Unity and IL2CPP build,https://github.com/ably/ably-dotnet/issues/1110
+空引用与对象生命周期,github_issue,Unable to record audio of the video rendered on 3D mesh using third party plugins like NatCorder,https://github.com/RenderHeads/UnityPlugin-AVProVideo/issues/1314
+空引用与对象生命周期,github_issue,Noobie question about MSBuildForUnity,https://github.com/microsoft/MSBuildForUnity/issues/44
+空引用与对象生命周期,github_issue,ApprovalCheck function might need update on your Wiki,https://github.com/Unity-Technologies/com.unity.netcode.gameobjects/issues/131
+空引用与对象生命周期,github_issue,Topic: OpenClass Room à Unity3D:,https://github.com/EloiStree/HelloSharpForUnity3D/issues/447
+空引用与对象生命周期,github_issue,I cant see the wishexplanation,https://github.com/danielstegink/Silksong.SilkAndSong/issues/15
+空引用与对象生命周期,github_issue,Destroy / Disable nob bug,https://github.com/FirstGearGames/FishNet/issues/649
+空引用与对象生命周期,github_issue,Server Breaking B: 65,https://github.com/unitystation/unitystation/issues/2646
+空引用与对象生命周期,github_issue,Python API: Simulation time starts automatically when run() is not called and reset() does not work properly,https://github.com/lgsvl/simulator/issues/1867
+空引用与对象生命周期,github_issue,"The ""Decluttering"" Feature from 2.5.4.4 is breaking KCT",https://github.com/TweakScale/TweakScale/issues/201
+空引用与对象生命周期,github_issue,Cannot access protected member `UnityEngine.Texture.Texture()`,https://github.com/ExtendRealityLtd/VRTK/issues/1796
+空引用与对象生命周期,github_issue,AR Scene Switches crash AR(Black screen),https://github.com/Unity-Technologies/arfoundation-samples/issues/94
+空引用与对象生命周期,github_issue,"Firebase 5.3.1 sdk is working normal in editor , but can't work in mobile device .",https://github.com/firebase/quickstart-unity/issues/224
+空引用与对象生命周期,github_issue,World Anchor Store never ready,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/640
+空引用与对象生命周期,github_issue,About those NREs ...,https://github.com/TweakScale/TweakScale/issues/2
+空引用与对象生命周期,github_issue,Getting intermittent null ref on SetGlobalListener,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/1189
+空引用与对象生命周期,github_issue,InvalidOperationException: Error: Attempted to call Initialize on a HlapiCommsNetwork,https://github.com/Placeholder-Software/Dissonance/issues/36
+空引用与对象生命周期,github_issue,Error on EventTrack when method is null,https://github.com/ddionisio/MateAnimator/issues/18
+空引用与对象生命周期,github_issue,Wolfs don't do anything,https://github.com/Syclamoth/GamesAI6/issues/4
+空引用与对象生命周期,github_issue,Stuck loading Inspector GUI.,https://github.com/bdunderscore/modular-avatar/issues/1843
+空引用与对象生命周期,github_issue,[Bug][Shell] Shell.Current.GoToAsync exception on certain navigation sequence,https://github.com/xamarin/Xamarin.Forms/issues/12958
+空引用与对象生命周期,github_issue,Unable to import a .glb file on Android,https://github.com/atteneder/glTFast/issues/576
+空引用与对象生命周期,github_issue,There is a issue about androidmanifest.xml,https://github.com/TLabAltoh/TLabWebViewVR/issues/11
+空引用与对象生命周期,github_issue,NullReferenceException spamming from RSE_PartAudioManager.LateUpdate,https://github.com/KSPModStewards/RocketSoundEnhancement/issues/24
+空引用与对象生命周期,github_issue,[Bug]: The autorejoin breaks when there is too many players.,https://github.com/winstxnhdw/lc-hax/issues/332
+空引用与对象生命周期,github_issue,[Bug] FirebaseRemoteConfigurations crash,https://github.com/firebase/quickstart-unity/issues/1082
+空引用与对象生命周期,github_issue,How to visualize data from rviz to Unity?,https://github.com/siemens/ros-sharp/issues/79
+空引用与对象生命周期,github_issue,Stopped polling job due to exception: System.MissingMethodException: UnityEditor.VersionControl.Task,https://github.com/googlesamples/unity-jar-resolver/issues/262
+包管理,github_issue,Firebase Database plugin crashes when calling UpdateChildrenAsync(),https://github.com/firebase/quickstart-unity/issues/371
+空引用与对象生命周期,github_issue,Using code to dynamically load FBX exported by Tilt Brush in Unity,https://github.com/googlevr/tilt-brush-toolkit/issues/35
+空引用与对象生命周期,github_issue,Unity 5.1.3 callback crash,https://github.com/rlabrecque/Steamworks.NET/issues/127
+空引用与对象生命周期,github_issue,Updated from Version: 2.1.3.4269 to Version: 2.1.3.5034 crashes build server,https://github.com/JetBrains/resharper-unity/issues/360
+包管理,github_issue,"""External Dependency Manager"" menu option missing",https://github.com/googlesamples/unity-jar-resolver/issues/341
+空引用与对象生命周期,github_issue,"if i pick a path from my gallery, serialize that, and then use LoadImageAtPath it said that the file path is not found. but if i use the google foto Instead it works",https://github.com/yasirkula/UnityNativeGallery/issues/328
+编译与命名空间,github_issue,Win ARM64 support (.dll for HoloLens),https://github.com/Cysharp/YetAnotherHttpHandler/issues/43
+空引用与对象生命周期,github_issue,NullReferenceException: Object reference not set to an instance of an object.,https://github.com/fo-dicom/fo-dicom/issues/885
+空引用与对象生命周期,github_issue,2.1.9 Server Error,https://github.com/nwesterhausen/valheim-discordconnector/issues/172
+Shader与渲染,github_issue,[URP] Camera render gray material,https://github.com/wave-harmonic/crest/issues/669
+空引用与对象生命周期,github_issue,[Bug] HoloLens 2 device code flow does not work,https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/issues/2231
+空引用与对象生命周期,github_issue,UnityWebRequest failing on IL2CPP Android in Unity 2017.1.0f3,https://github.com/aws/aws-sdk-net/issues/701
+空引用与对象生命周期,github_issue,【实现建议】不用IDMAP，只使用IDTagAttribute。,https://github.com/Tencent/InjectFix/issues/34
+空引用与对象生命周期,github_issue,Holographic Remoting: Cursor stops working after first air-tap on Hololens (Gen 1) using RC1,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/3909
+空引用与对象生命周期,github_issue,Downloaded music does not play,https://github.com/Yoshify/DiscJockey/issues/14
+空引用与对象生命周期,github_issue,Vive Controllers not showing up in build,https://github.com/ValveSoftware/steamvr_unity_plugin/issues/266
+Addressables与资源加载,github_issue,"REPOLib broken after 0.3.0 update, DO NOT UPDATE IF YOU WANT TO PLAY MODDED.",https://github.com/ZehsTeam/REPOLib/issues/55
+空引用与对象生命周期,github_issue,The game failed to start.,https://github.com/Keranik/COI-Extended/issues/149
+空引用与对象生命周期,github_issue,Mod completely broken? Blackscreen on startup.,https://github.com/bbradson/Performance-Fish/issues/55
+空引用与对象生命周期,github_issue,Assembly does not work in Derail Valley for Arch Linux,https://github.com/newman55/unity-mod-manager/issues/140
+编译与命名空间,github_issue,Publish and Subscribe Node Between ROS and Unity IOS Application,https://github.com/siemens/ros-sharp/issues/235
+空引用与对象生命周期,github_issue,Executing any script using Jint 3 with Unity 2021.3 results in TypeLoadException,https://github.com/sebastienros/jint/issues/1564
+空引用与对象生命周期,github_issue,Support for Unity,https://github.com/BrannonKing/NLoptNet/issues/10
+空引用与对象生命周期,github_issue,CTF+JIP Bugs,https://github.com/overload-development-community/olmod/issues/270
+空引用与对象生命周期,github_issue,[OSX] Crash on loading a scene,https://github.com/nesrak1/HKWorldEdit2/issues/3
+空引用与对象生命周期,github_issue,Change camera view and zoom on loading,https://github.com/lgsvl/simulator/issues/1781
+空引用与对象生命周期,github_issue,Broken in Hearth and Home,https://github.com/HackShardGaming/World-of-Valheim-Public/issues/6
+编译与命名空间,github_issue,Emacs + ls-mode fail on C# file in Linux Ubuntu 20.04,https://github.com/emacs-lsp/lsp-mode/issues/2188
+空引用与对象生命周期,github_issue,Errors in Uity Editor,https://github.com/yorkeyao/VehicleX/issues/8
+空引用与对象生命周期,github_issue,Vive Focus Plus - error in any demo - Unity,https://github.com/ViveSoftware/ViveInputUtility-Unity/issues/169
+空引用与对象生命周期,github_issue,Crashes upon opening a project,https://github.com/dmc31a42/UnityL10nTool/issues/9
+空引用与对象生命周期,github_issue,More Unity Inspections,https://github.com/JetBrains/resharper-unity/issues/107
+空引用与对象生命周期,github_issue,SpectatorView: Menu Items Not Appearing,https://github.com/microsoft/MixedRealityCompanionKit/issues/54
+空引用与对象生命周期,github_issue,Strange issue when importing some .tmx files #74 2,https://github.com/Seanba/Tiled2Unity/issues/85
+空引用与对象生命周期,github_issue,How to run prefab creation from OBJ models?,https://github.com/dicarlolab/ThreeDWorld/issues/13
+空引用与对象生命周期,github_issue,unity 2017 Mac errors asset store version 1.2.4,https://github.com/simeonradivoev/UniGit/issues/17
+空引用与对象生命周期,github_issue,Mod is broken,https://github.com/Wet-Boys/LookingGlass/issues/153
+空引用与对象生命周期,github_issue,[BUG] crashes upon return to world hub (starting poin/chapel),https://github.com/CmmmmmmLau/SulFur_Battle_improvement/issues/5
+空引用与对象生命周期,github_issue,Issue with WebGL,https://github.com/PlaceholderGames/2122-yr2-team3/issues/32
+空引用与对象生命周期,github_issue,NullReferenceException in v0.9.42 w/ unity2017.2.0f3,https://github.com/playgameservices/play-games-plugin-for-unity/issues/2029
+空引用与对象生命周期,github_issue,iOS crash when changing scenes with Selfie Segmentation,https://github.com/homuler/MediaPipeUnityPlugin/issues/814
+空引用与对象生命周期,github_issue,[BUG] Breaking compatibility changes,https://github.com/valheimPlus/ValheimPlus/issues/709
+空引用与对象生命周期,github_issue,Can't find game?,https://github.com/jammsen/docker-the-forest-dedicated-server/issues/21
+空引用与对象生命周期,github_issue,MacOS docfx broken between 2.51 and 2.52,https://github.com/dotnet/docfx/issues/5785
+Shader与渲染,github_issue,[URP] Underwater Curtain/Meniscus broken in URP 7.4.1,https://github.com/wave-harmonic/crest/issues/531
+空引用与对象生命周期,github_issue,Adding a new Unity type from template via the solution explorer is always named 'a',https://github.com/JetBrains/resharper-unity/issues/328
+空引用与对象生命周期,github_issue,Can't Run Convergence,https://github.com/worldofbalance/unity-game-client/issues/16
+空引用与对象生命周期,github_issue,get score from leaderboard not working???,https://github.com/playgameservices/play-games-plugin-for-unity/issues/716
+空引用与对象生命周期,github_issue,bannerview.hide () doesn't work.,https://github.com/googleads/googleads-mobile-unity/issues/74
+空引用与对象生命周期,github_issue,[SOLVED] Unity 2022.3.4f1: Exceptions + broken inspector when looking at any entity,https://github.com/sschmid/Entitas/issues/1067
+空引用与对象生命周期,github_issue,[Bug]: Exception invoking update method(Installation using an unsupported method),https://github.com/yukieiji/UnityExplorer/issues/109
+API弃用与版本迁移,github_issue,[Bug]: Unity 6000.3.0f crash due to missing method (Unity v6000.3 with BIE 5),https://github.com/yukieiji/UnityExplorer/issues/81
+空引用与对象生命周期,github_issue,[CLIENT SIDE] NREs when loading craft around non-existent bodies,https://github.com/LunaMultiplayer/LunaMultiplayer/issues/588
+空引用与对象生命周期,github_issue,Is mapbox-unity abandonware ?,https://github.com/mapbox/mapbox-unity-sdk/issues/1837
+空引用与对象生命周期,github_issue,Can't figure out how to edit WhateverDevs.TwoDAudio.Runtime.asmdef to remove broken item,https://github.com/varguiniano/YAPU/issues/3
+空引用与对象生命周期,github_issue,Map size error?,https://github.com/ZenDragonX/ZenMods_Valheim/issues/44
+空引用与对象生命周期,github_issue,ProcessPointerEventsSystem does find the entity but does not find PBPointerEvents,https://github.com/decentraland/unity-explorer/issues/751
+空引用与对象生命周期,github_issue,NullReferenceException: Object reference not set to an instance of an object,https://github.com/srcnalt/OpenAI-Unity/issues/3
+空引用与对象生命周期,github_issue,not working,https://github.com/airar-dev/Unity-AR-ColorMapping/issues/29
+空引用与对象生命周期,github_issue,Possible to consider adding the ability to query/add members from within SubScenes which are loaded for editing?,https://github.com/Unity-Technologies/com.unity.selection-groups/issues/75
+空引用与对象生命周期,github_issue,Socket Disconnetcts when trying to create party,https://github.com/heroiclabs/nakama-unity/issues/119
+空引用与对象生命周期,github_issue,No Video Stream on MacOS (or Errors),https://github.com/Unity-Technologies/UnityRenderStreaming/issues/271
+空引用与对象生命周期,github_issue,Batcher.cs Exception,https://github.com/Unity-Technologies/ml-agents/issues/2391
+空引用与对象生命周期,github_issue,New Update Door Issues,https://github.com/SmartlyDressedGames/Unturned-3.x-Community/issues/2095
+空引用与对象生命周期,github_issue,UIWidgets 性能问题,https://github.com/UnityTech/UIWidgets/issues/406
+空引用与对象生命周期,github_issue,InputSystemDisable() followed by InputSystem.Enable causes NullPointerExceptions,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/5085
+空引用与对象生命周期,github_issue,What kind model do you use in your example?,https://github.com/Syn-McJ/TFClassify-Unity/issues/6
+空引用与对象生命周期,github_issue,Please help me with some tutorial of GUI system,https://github.com/kisence-mian/MyUnityFrameWork/issues/7
+空引用与对象生命周期,github_issue,Does not works from UPM package,https://github.com/Demigiant/dotween/issues/395
+空引用与对象生命周期,github_issue,Error loop when loading thegenerationofdanger.com,https://github.com/LadybirdBrowser/ladybird/issues/7069
+空引用与对象生命周期,github_issue,Bindings page not working,https://github.com/ValveSoftware/steamvr_unity_plugin/issues/309
+API弃用与版本迁移,github_issue,Confirm Vuforia compatibility with Unity 6 LTS,https://github.com/PTCInc/vuforia-engine/issues/173
+空引用与对象生命周期,github_issue,NullReferenceException: Object reference not set to an instance of an object,https://github.com/AdalynBlack/LipsyncHelper/issues/2
+空引用与对象生命周期,github_issue,How to use the package?,https://github.com/Field-Robotics-Japan/UnitySensors/issues/159
+空引用与对象生命周期,github_issue,NullReferenceException -> Called activePendingPiecesCoroutine,https://github.com/zolantris/ValheimMods/issues/50
+空引用与对象生命周期,github_issue,bug or something else,https://github.com/wijes/TerminalDesktop/issues/11
+空引用与对象生命周期,github_issue,AE_FSM和DogFramework.EditorExtension 命名空间丢失？,https://github.com/HalfADog/Unity-RPGCore-HFSM/issues/1
+空引用与对象生命周期,github_issue,会议结束后直接黑屏,https://github.com/CognifyDev/ClashOfGods/issues/49
+空引用与对象生命周期,github_issue,XPortal crashes on dedicated server with Valheim Plus installed,https://github.com/SpikeHimself/XPortal/issues/29
+空引用与对象生命周期,github_issue,"GitHub Desktop will not launch, for unclear reasons",https://github.com/desktop/desktop/issues/3443
+空引用与对象生命周期,github_issue,Teleport Marker doesn't survive scene change,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/1388
+空引用与对象生命周期,github_issue,Errors on server start,https://github.com/wovencode/OpenMMO/issues/72
+空引用与对象生命周期,github_issue,Exceptions with UI on startup,https://github.com/sinai-dev/UnityExplorer/issues/54
+空引用与对象生命周期,github_issue,Error Unhandled exception: System.Collections.Generic.KeyNotFoundException:,https://github.com/knah/Il2CppAssemblyUnhollower/issues/2
+空引用与对象生命周期,github_issue,Exceptions thrown when playing via Holographic Remote Player,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/4575
+空引用与对象生命周期,github_issue,NullReference Exception on Startup When Using DataBus with Existing StructureMap Child Container,https://github.com/Particular/NServiceBus/issues/4968
+空引用与对象生命周期,github_issue,Installers not being run before injected method on monobehaviour in latest verison?,https://github.com/ssannandeji/Zenject-2019/issues/122
+空引用与对象生命周期,github_issue,0.45.1 Roslyn doesn't work on Windows,https://github.com/sschmid/Entitas/issues/495
+空引用与对象生命周期,github_issue,Null Reference with connected storage in Unity,https://github.com/microsoft/xbox-live-unity-plugin/issues/124
+空引用与对象生命周期,github_issue,issue with joincall link,https://github.com/hololux/azure-communication-services-unity/issues/1
+空引用与对象生命周期,github_issue,No devices found in one project but same scene works in another project,https://github.com/Velorexe/Unity-Android-Bluetooth-Low-Energy/issues/45
+空引用与对象生命周期,github_issue,Weird `ExecutionEngineException: String conversion error: Illegal byte sequence encounted in the input` on Windows,https://github.com/KSP-ModularManagement/KSPe/issues/32
+空引用与对象生命周期,github_issue,Duplicate Mediators,https://github.com/strangeioc/strangeioc/issues/71
+空引用与对象生命周期,github_issue,"Multiple Wit.Ai configurations used in the same game seem not to work. I am trying this with Unity, but gets stuck on the first one. If anyone can help, much obliged.",https://github.com/wit-ai/wit/issues/2588
+空引用与对象生命周期,github_issue,"""Open Binding UI"" button throws error and does not open anything",https://github.com/ValveSoftware/steamvr_unity_plugin/issues/311
+空引用与对象生命周期,github_issue,Non-ASCII characters are not displayed properly with TextMeshProUGUI and SoftMask.,https://github.com/mob-sakai/SoftMaskForUGUI/issues/216
+空引用与对象生命周期,github_issue,Error occurred while mimicking voice: NAudio.MmException: AcmNotPossible calling acmFormatSuggest,https://github.com/qwbarch/mirage/issues/95
+空引用与对象生命周期,github_issue,"Unity.Netcode.Editor.CodeGen.NetworkBehaviourILPP: (0,0) when in 1.7.0",https://github.com/Unity-Technologies/com.unity.netcode.gameobjects/issues/2755
+空引用与对象生命周期,github_issue,Unable to load DLL 'mediapipe_jni' on Android build,https://github.com/homuler/MediaPipeUnityPlugin/issues/96
+API弃用与版本迁移,github_issue,ArgumentNullException and Failed to create Mujoco runtime,https://github.com/google-deepmind/mujoco/issues/1171
+空引用与对象生命周期,github_issue,0.7.50 hang on loading,https://github.com/ka-dyn/ExpandedContent/issues/117
+空引用与对象生命周期,github_issue,NullReferenceException when using SteamP2P Transport,https://github.com/Unity-Technologies/multiplayer-community-contributions/issues/122
+空引用与对象生命周期,github_issue,Notarized MacOS app - Mediapipe dylib doesn't load/work,https://github.com/homuler/MediaPipeUnityPlugin/issues/616
+编译与命名空间,github_issue,HoloLens - Get ClearScript on UWP+ARM64 running,https://github.com/ClearFoundry/ClearScript/issues/364
+空引用与对象生命周期,github_issue,Cannot access camera,https://github.com/homuler/MediaPipeUnityPlugin/issues/174
+空引用与对象生命周期,github_issue,[BUG] Periodic null pointer exceptions sailing around the coast of a new island,https://github.com/valheimPlus/ValheimPlus/issues/416
+空引用与对象生命周期,github_issue,[Bug]: Mountain bandit bounties give errors and don't spawn anything.,https://github.com/Digitalroot-Valheim/Digitalroot.Valheim.EpicLoot.Adventure.Bounties/issues/10
+空引用与对象生命周期,github_issue,How to keep only one spawned object active when tracked image is detected,https://github.com/Unity-Technologies/arfoundation-samples/issues/663
+空引用与对象生命周期,github_issue,Lastest Update issues with Status.json,https://github.com/SmartlyDressedGames/Unturned-3.x-Community/issues/2079
+空引用与对象生命周期,github_issue,NullReferenceException: Object reference not set to an instance of an object,https://github.com/Unity-Technologies/barracuda-release/issues/72
+空引用与对象生命周期,github_issue,Null Reference exception when game is played in android,https://github.com/DavidArayan/ezy-slice/issues/16
+空引用与对象生命周期,github_issue,unity2019.2.1 Build pc error,https://github.com/curiosity-inc/azure-kinect-dk-unity/issues/1
+空引用与对象生命周期,github_issue,Shader compile errors on PS4,https://github.com/wave-harmonic/crest/issues/424
+空引用与对象生命周期,github_issue,Facebook SDK v7.16.0 NullReferenceExceptions on iOS,https://github.com/facebook/facebook-sdk-for-unity/issues/252
+空引用与对象生命周期,github_issue,Errors and Crashes in Unity when using multiple cameras,https://github.com/realsenseai/librealsense/issues/2999
+空引用与对象生命周期,github_issue,"Consider refactoring InputManager, MixedRealityCameraParent, Cursor to reduce dependencies",https://github.com/microsoft/MixedRealityToolkit-Unity/issues/1235
+空引用与对象生命周期,github_issue,[vNext] Proposed Fixes for Singleton,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/486
+输入系统,github_issue,MRTK vNext SpeechInputHandler NullReference,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/2834
+空引用与对象生命周期,github_issue,Blank popup which can't be dismissed when using Unity Debug player,https://github.com/linuxgurugamer/ToolbarControl/issues/1
+空引用与对象生命周期,github_issue,NullReferenceException: Object reference not set to an instance of an object,https://github.com/github-for-unity/Unity/issues/351
+空引用与对象生命周期,github_issue,Null runtime error,https://github.com/ReiiYuki/Intel-Realsense-Hand-Toolkit-Unity/issues/2
+空引用与对象生命周期,github_issue,Can I open and edit the scenes from procthor-10k dataset in Unity.editor?,https://github.com/allenai/ai2thor/issues/1128
+空引用与对象生命周期,github_issue,SteamVR_Actions broken after Scene reload,https://github.com/ValveSoftware/steamvr_unity_plugin/issues/616
+空引用与对象生命周期,github_issue,Problems when adding a labeler to a perception camera,https://github.com/Unity-Technologies/com.unity.perception/issues/578
+空引用与对象生命周期,github_issue,[BUG]: Infinite loading bug,https://github.com/XuuXiaolan/CodeRebirth/issues/135
+空引用与对象生命周期,github_issue,"Cant move in game, load in infront of a wall",https://github.com/Damntry/SuperQoLity/issues/12
+空引用与对象生命周期,github_issue,"When I press run, the browser automatically open a auth page. After vertify my account, it says successfully verified, and nothing happenned until it went wrong...",https://github.com/arenaxr/arena-unity/issues/131
+Shader与渲染,github_issue,NullReferenceException Error,https://github.com/aras-p/UnityGaussianSplatting/issues/153
+空引用与对象生命周期,github_issue,Host/client desync,https://github.com/tesinormed/FAndCDaveCo/issues/1
+空引用与对象生命周期,github_issue,[Bug] Android crash,https://github.com/RenderHeads/UnityPlugin-AVProMovieCapture/issues/419
+空引用与对象生命周期,github_issue,Can't respawn with mod enabled.,https://github.com/Shaosil/LethalCompanyMods-GeneralImprovements/issues/101
+空引用与对象生命周期,github_issue,gRPC + IL2CPP for Unity fails to build,https://github.com/grpc/grpc/issues/22485
+空引用与对象生命周期,github_issue,Relative Volume Path 를 이용하여 Dicom Image Viewer 를 구현하기,https://github.com/hsskia/unity_task/issues/9
+空引用与对象生命周期,github_issue,"Latest version throws error, wont allow world to load. Reverting to .15 everything is OK.",https://github.com/SpikeHimself/XPortal/issues/68
+构建与IL2CPP,github_issue,Firebase app creation failed on Standalone Windows Build when project contains special charactors,https://github.com/firebase/firebase-unity-sdk/issues/427
+空引用与对象生命周期,github_issue,Unity iOS: Errors while creating transport,https://github.com/ably/ably-dotnet/issues/764
+空引用与对象生命周期,github_issue,Method not found: 'Void System.__Canon..ctor(IntPtr),https://github.com/BepInEx/Il2CppInterop/issues/73
+空引用与对象生命周期,github_issue,MobileAds.Initialize() throws an exception,https://github.com/googleads/googleads-mobile-unity/issues/854
+空引用与对象生命周期,github_issue,"SDK Functionalities not working on the device (Only when built, in editor works fine)",https://github.com/firebase/quickstart-unity/issues/901
+空引用与对象生命周期,github_issue,Scene extracting,https://github.com/SeriousCache/UABE/issues/77
+空引用与对象生命周期,github_issue,The old morseCode bug is back,https://github.com/linuxgurugamer/CrewLight/issues/1
+空引用与对象生命周期,github_issue,NullReferenceException on low performance devices,https://github.com/mixpanel/mixpanel-unity/issues/89
+空引用与对象生命周期,github_issue,WebGL invoked UniTask via reflection got Status = 'Faulted',https://github.com/Cysharp/UniTask/issues/289
+空引用与对象生命周期,github_issue,Can't load external model to agent (from .pth convert to .onnx and then to .nn),https://github.com/Unity-Technologies/ml-agents/issues/3398
+空引用与对象生命周期,github_issue,NullReferenceException on NetworkWritter.WriteBlittable[T],https://github.com/MirrorNetworking/Mirror/issues/2511
+编译与命名空间,github_issue,Debug.Assert is not recodnized as assertion by Rider,https://github.com/JetBrains/resharper-unity/issues/207
+空引用与对象生命周期,github_issue,The MRTK does not support being unloaded and destroyed,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/4530
+空引用与对象生命周期,github_issue,bt asset can get corrupted,https://github.com/luis-l/BonsaiBehaviourTree/issues/11
+空引用与对象生命周期,github_issue,NullReferenceException on a Singleton.instance,https://github.com/mapbox/mapbox-unity-sdk/issues/116
+空引用与对象生命周期,github_issue,[help] Invalid memory access when playing networked Bolt game w/ Dissonance,https://github.com/Placeholder-Software/Dissonance/issues/203
+空引用与对象生命周期,github_issue,Target API Level 29 Incompatibility,https://github.com/googlesamples/unity-jar-resolver/issues/322
+空引用与对象生命周期,github_issue,Unity 2019.2 compatibility,https://github.com/marijnz/unity-toolbar-extender/issues/10
+空引用与对象生命周期,github_issue,Null ref exception in the `FunctionToInstanceMethodPass` pass,https://github.com/mono/CppSharp/issues/1081
+空引用与对象生命周期,github_issue,Real Time Multiplayer Quick Match is Entering ShutDownState all the time,https://github.com/playgameservices/play-games-plugin-for-unity/issues/629
+空引用与对象生命周期,github_issue,[2017.2.1.4 Patch Release] Hololens. BoundingBoxGizmoExample. Any scene selections cause NullReferenceException,https://github.com/microsoft/MixedRealityToolkit-Unity/issues/2009
+空引用与对象生命周期,github_issue,Constant Errors in Unity 5.5.0f3,https://github.com/zios/unity-themes/issues/14
+空引用与对象生命周期,github_issue,NullReferenceException when analyzing project inside VS,https://github.com/dotnet/roslyn/issues/16294
+空引用与对象生命周期,github_issue,NullReferenceException: Object reference not set to an instance of an object | connector port bug?,https://github.com/ihsoft/KIS/issues/167
+空引用与对象生命周期,github_issue,crash while analyzing,https://github.com/vad710/UnityEngineAnalyzer/issues/5
+空引用与对象生命周期,github_issue,Lots of NullReferenceException in Unity 5.2.0f3 (doesn't work),https://github.com/Seneral/Node_Editor_Framework/issues/8
+空引用与对象生命周期,github_issue,Adding OnEdit Handler via code,https://github.com/kmbang/UnityNativeEdit/issues/2
+空引用与对象生命周期,github_issue,Authenticate failed,https://github.com/playgameservices/play-games-plugin-for-unity/issues/80
+空引用与对象生命周期,github_issue,Should have DataStoreExtensions.Get not throw NullReferenceException when overriting DependencyResolver (fixed in #704),https://github.com/Glimpse/Glimpse/issues/336
+API弃用与版本迁移,github_issue,Many attributes do not work in Unity 2022.2+,https://github.com/dbrizov/NaughtyAttributes/issues/369
+空引用与对象生命周期,github_issue,Crash games when translated from English into Russian,https://github.com/bbepis/XUnity.AutoTranslator/issues/178
+空引用与对象生命周期,github_issue,Unity Editor crashes (SIGSEGV) when the server receives a command while reloading the domain,https://github.com/yucchiy/UniCli/issues/118
+空引用与对象生命周期,github_issue,still having problems with the seasonal textures,https://github.com/shudnal/Seasons/issues/37
+空引用与对象生命周期,github_issue,[Experimental] Issue loading save,https://github.com/Keranik/COI-Extended/issues/152
+空引用与对象生命周期,github_issue,[BUG]: Every level fails to load (intended lack of configurability?),https://github.com/XuuXiaolan/CodeRebirth/issues/68
+空引用与对象生命周期,github_issue,NullReferenceException on cold starts without attribution [iOS] [Adjust v5.1.2],https://github.com/adjust/unity_sdk/issues/330
+空引用与对象生命周期,github_issue,Network Transform Object reference not set to an instance of an object,https://github.com/FirstGearGames/FishNet/issues/881
+空引用与对象生命周期,github_issue,"[Vanilla/Issue] Quick report, pull the lever and NullReferenceException",https://github.com/hoffor/MyLethalCompanyMods/issues/7
+空引用与对象生命周期,github_issue,Mod doesn't seem to load,https://github.com/MMike17/ArtOfRally_DamageUI/issues/1
+空引用与对象生命周期,github_issue,[Bug] NullReferenceException on Unity 2022.3.9f1 and GPGS 11.01,https://github.com/googlesamples/unity-jar-resolver/issues/676
+空引用与对象生命周期,github_issue,It crashes if it detects a certain version of Unity,https://github.com/unitycoder/UnityLauncherPro/issues/159
+空引用与对象生命周期,github_issue,NRE Spam,https://github.com/LGhassen/Scatterer/issues/173
+空引用与对象生命周期,github_issue,Camera goes away forever bug,https://github.com/tari-cat/CustomGraffiti/issues/4
+空引用与对象生命周期,github_issue,Failed to initialize Vuforia Engine,https://github.com/juicycleff/flutter-unity-view-widget/issues/37
+空引用与对象生命周期,github_issue,Portal dialog frozen and no mouse cursor after Hilda update,https://github.com/SpikeHimself/XPortal/issues/61
+空引用与对象生命周期,github_issue,Server does not seem to be set up correctly,https://github.com/jammsen/docker-the-forest-dedicated-server/issues/47
+空引用与对象生命周期,github_issue,Constant NullReferenceException in GitHub.Unity.Window.Update(),https://github.com/github-for-unity/Unity/issues/1068
+空引用与对象生命周期,github_issue,"MRTK Configurator Utility interrupts and staggers loading the editor, building, and changing scenes",https://github.com/microsoft/MixedRealityToolkit-Unity/issues/7109
+空引用与对象生命周期,github_issue,Health tooltip on hediff errors,https://github.com/Tachyonite/Pawnmorpher/issues/592
+空引用与对象生命周期,github_issue,No ROS environment sourced.,https://github.com/RobotecAI/ros2-for-unity/issues/32
+Addressables与资源加载,github_issue,Issue while building release build (exe),https://github.com/homuler/MediaPipeUnityPlugin/issues/246
+空引用与对象生命周期,github_issue,[Bug]: Failed to get type by name,https://github.com/sinai-dev/UnityExplorer/issues/121
+空引用与对象生命周期,github_issue,Possible conflict with EpicLoot bounties,https://github.com/ontrigger/ValheimPerformanceOptimizations/issues/20
+空引用与对象生命周期,github_issue,force resolve for android give me this error NullReferenceException,https://github.com/googlesamples/unity-jar-resolver/issues/430
+空引用与对象生命周期,github_issue,[GLITCH] Strange POV bug on new server of mine.,https://github.com/SmartlyDressedGames/Unturned-3.x-Community/issues/2754
+空引用与对象生命周期,github_issue,SuperEditor Pro not working anymore on both MacOS and Windows,https://github.com/UnitySuperEditor/SuperEditor/issues/9
+空引用与对象生命周期,github_issue,Gestures do not work on HL2 with OpenXR or XR SDK (but in the Unity Editor Player),https://github.com/microsoft/MixedRealityToolkit-Unity/issues/9492
+Addressables与资源加载,github_issue,PlayAssetDelivery.RetrieveAssetBundleAsync() returning the error: Exception: Field currentActivity or type signature not found,https://github.com/google/play-unity-plugins/issues/75
+空引用与对象生命周期,github_issue,System.Reflection.Emit in AOT environment with code generation,https://github.com/dotnet/aspnetcore/issues/10080
+空引用与对象生命周期,github_issue,Change default logging for unhandled exceptions,https://github.com/Cysharp/UniTask/issues/40
+空引用与对象生命周期,github_issue,Intermittent UI disruption on load,https://github.com/sway2020/FindIt2/issues/41
+空引用与对象生命周期,github_issue,New Jar resolver removes Play Services library,https://github.com/googlesamples/unity-jar-resolver/issues/212
+空引用与对象生命周期,github_issue,GVR SDK for Unity v1.100.1 - Demos,https://github.com/googlevr/gvr-unity-sdk/issues/769
+空引用与对象生命周期,github_issue,@Lisias: MFI 1.2.4.10 creates NRE spam - also rls MFI 1.2.5.0 does it,https://github.com/sarbian/ModularFlightIntegrator/issues/9
+空引用与对象生命周期,github_issue,Bolt breaks unhelpfully with Newtonsoft JSON.net,https://github.com/BoltEngine/Bolt-Tracker/issues/38
+空引用与对象生命周期,github_issue,Null Reference exception when starting SignInAndProfile.unity scene on a CLEAN machine,https://github.com/microsoft/xbox-live-unity-plugin/issues/125
+空引用与对象生命周期,github_issue,Could not find the specified module,https://github.com/github-beta/unity-preview/issues/8
+空引用与对象生命周期,github_issue,Externalcamera.cfg breaks bows example in 2.2.1,https://github.com/ExtendRealityLtd/VRTK/issues/1156
+空引用与对象生命周期,github_issue,Nested Extensions not working pre RC3 (Time Stamp Margin Plugin gives error on install),https://github.com/microsoft/VS-PPT/issues/77
+空引用与对象生命周期,github_issue,Wierd behaviour of Nodetypes.FetchNode();,https://github.com/Seneral/Node_Editor_Framework/issues/101
+空引用与对象生命周期,github_issue,JUNKS!!!,https://github.com/mpreble/UnityFBXImporter/issues/4
+空引用与对象生命周期,github_issue,[Unity] Array issues with OnEnable and imageless setup pose.,https://github.com/EsotericSoftware/spine-runtimes/issues/82
+空引用与对象生命周期,github_issue,TWF-081: Validate World Consequence Persistence,https://github.com/Ustice/Timberborn-Wildfire/issues/17
+空引用与对象生命周期,github_issue,cannot render webview in GearVR handset,https://github.com/gree/unity-webview/issues/81
+空引用与对象生命周期,github_issue,[warning] Exception in UnityEngine.UI.InputField:LateUpdate,https://github.com/ChewBacher/kaizen-tower-defense/issues/4
+空引用与对象生命周期,github_issue,Игре не удалось запуститься.,https://github.com/MaFi-Games/Captain-of-Industry-issues/issues/2269
+空引用与对象生命周期,github_issue,"Bloodburst Clam NullReferenceException, Essences not loaded?",https://github.com/BrandonRosa/Augmentum/issues/34
+空引用与对象生命周期,github_issue,Error during editor import of GLB file,https://github.com/Siccity/GLTFUtility/issues/33
+空引用与对象生命周期,github_issue,Things that don't work in this project.,https://github.com/petergu684/HoloLens2-ResearchMode-Unity/issues/35
+空引用与对象生命周期,github_issue,SetMediaPlatformSettings() Failed with SEHException,https://github.com/microsoftgraph/microsoft-graph-comms-samples/issues/841
+空引用与对象生命周期,github_issue,How to configure debugging to ignore errors that cause execution to pause?,https://github.com/JaneySprings/DotRush/issues/102
