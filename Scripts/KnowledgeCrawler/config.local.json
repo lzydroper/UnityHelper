@@ -79,10 +79,10 @@
       "https://github.com/Tencent/xLua",
       "https://github.com/topameng/tolua"
     ],
-    "max_pages": 40,
+    "max_pages": 400,
     "framework_targets": {
-      "xlua": 25,
-      "tolua": 15
+      "xlua": 250,
+      "tolua": 150
     },
     "min_effective_chars": 120,
     "delay_seconds": 0.6,
