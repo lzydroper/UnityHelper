@@ -8,17 +8,14 @@ from common import load_config, read_jsonl, resolve_output_root, write_jsonl
 from unity_doc_cleaner import extract_page, is_low_value_page
 
 
-def clean_existing(config_path: str | Path) -> Path:
-    config = load_config(config_path)
-    output_root = resolve_output_root(config, config_path)
-    raw_dir = output_root / "raw" / "unity_docs"
-    source_path = raw_dir / "unity_docs.jsonl"
-    clean_path = raw_dir / "unity_docs_clean.jsonl"
-    rejected_path = raw_dir / "unity_docs_rejected.jsonl"
-    html_dir = raw_dir / "html"
-    min_effective_chars = int(config.get("unity_docs", {}).get("min_effective_chars", 140))
-    preserve_image_refs = bool(config.get("unity_docs", {}).get("preserve_image_refs", True))
-
+def clean_file(
+    source_path: Path,
+    clean_path: Path,
+    rejected_path: Path,
+    html_dir: Path,
+    min_effective_chars: int,
+    preserve_image_refs: bool,
+) -> tuple[int, int]:
     cleaned = []
     rejected = []
     for row in read_jsonl(source_path):
@@ -43,8 +40,47 @@ def clean_existing(config_path: str | Path) -> Path:
 
     write_jsonl(clean_path, cleaned)
     write_jsonl(rejected_path, rejected)
-    print(f"Wrote {len(cleaned)} cleaned Unity docs to {clean_path}")
-    print(f"Wrote {len(rejected)} rejected/low-value Unity docs to {rejected_path}")
+    return len(cleaned), len(rejected)
+
+
+def clean_existing(config_path: str | Path) -> Path:
+    config = load_config(config_path)
+    output_root = resolve_output_root(config, config_path)
+    raw_dir = output_root / "raw" / "unity_docs"
+    source_path = raw_dir / "unity_docs.jsonl"
+    clean_path = raw_dir / "unity_docs_clean.jsonl"
+    rejected_path = raw_dir / "unity_docs_rejected.jsonl"
+    html_dir = raw_dir / "html"
+    min_effective_chars = int(config.get("unity_docs", {}).get("min_effective_chars", 140))
+    preserve_image_refs = bool(config.get("unity_docs", {}).get("preserve_image_refs", True))
+
+    cleaned_count, rejected_count = clean_file(
+        source_path,
+        clean_path,
+        rejected_path,
+        html_dir,
+        min_effective_chars,
+        preserve_image_refs,
+    )
+    for incremental_path in sorted(raw_dir.glob("unity_docs_incremental_*.jsonl")):
+        if incremental_path.name.endswith(("_clean.jsonl", "_rejected.jsonl")):
+            continue
+        stem = incremental_path.stem
+        incremental_clean = raw_dir / f"{stem}_clean.jsonl"
+        incremental_rejected = raw_dir / f"{stem}_rejected.jsonl"
+        incremental_cleaned, incremental_rejected_count = clean_file(
+            incremental_path,
+            incremental_clean,
+            incremental_rejected,
+            html_dir,
+            min_effective_chars,
+            preserve_image_refs,
+        )
+        print(f"Wrote {incremental_cleaned} cleaned incremental Unity docs to {incremental_clean}")
+        print(f"Wrote {incremental_rejected_count} rejected incremental Unity docs to {incremental_rejected}")
+
+    print(f"Wrote {cleaned_count} cleaned Unity docs to {clean_path}")
+    print(f"Wrote {rejected_count} rejected/low-value Unity docs to {rejected_path}")
     return clean_path
 
 

@@ -18,8 +18,73 @@
       "/Manual/",
       "/ScriptReference/"
     ],
-    "max_pages": 1800,
+    "max_pages": 3200,
+    "section_targets": {
+      "Manual": 2000,
+      "ScriptReference": 1200
+    },
     "min_effective_chars": 140,
+    "delay_seconds": 0.6,
+    "user_agent": "UnityDevAssistantCourseProject/1.0"
+  },
+  "lua_docs": {
+    "seeds": [
+      {
+        "url": "https://tencent.github.io/xLua/public/v1/guide/index.html",
+        "framework": "xlua",
+        "section": "guide"
+      },
+      {
+        "url": "https://github.com/Tencent/xLua",
+        "framework": "xlua",
+        "section": "readme"
+      },
+      {
+        "url": "https://github.com/topameng/tolua",
+        "framework": "tolua",
+        "section": "readme"
+      },
+      {
+        "url": "https://github.com/topameng/tolua/wiki",
+        "framework": "tolua",
+        "section": "wiki"
+      },
+      {
+        "url": "https://github.com/topameng/tolua/wiki/Examples",
+        "framework": "tolua",
+        "section": "wiki"
+      },
+      {
+        "url": "https://github.com/topameng/tolua/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98",
+        "framework": "tolua",
+        "section": "wiki"
+      },
+      {
+        "url": "https://github.com/topameng/tolua/wiki/%E6%9B%B4%E6%96%B0tolua%23",
+        "framework": "tolua",
+        "section": "wiki"
+      },
+      {
+        "url": "https://github.com/topameng/tolua/wiki/%E7%8E%AF%E5%A2%83",
+        "framework": "tolua",
+        "section": "wiki"
+      }
+    ],
+    "allowed_domains": [
+      "tencent.github.io",
+      "github.com"
+    ],
+    "allowed_url_prefixes": [
+      "https://tencent.github.io/xLua/public/v1/guide/",
+      "https://github.com/Tencent/xLua",
+      "https://github.com/topameng/tolua"
+    ],
+    "max_pages": 40,
+    "framework_targets": {
+      "xlua": 25,
+      "tolua": 15
+    },
+    "min_effective_chars": 120,
     "delay_seconds": 0.6,
     "user_agent": "UnityDevAssistantCourseProject/1.0"
   },

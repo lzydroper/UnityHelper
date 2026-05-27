@@ -30,6 +30,50 @@ def count_jsonl(path: Path) -> tuple[int, Counter[str]]:
     return total, counter
 
 
+def count_many_jsonl(paths: list[Path]) -> tuple[int, Counter[str]]:
+    seen_ids: set[str] = set()
+    counter: Counter[str] = Counter()
+    for path in paths:
+        if not path.exists():
+            continue
+        for row in read_jsonl(path):
+            row_id = str(row.get("chunk_id") or f"{path}:{row.get('file', '')}:{row.get('url', '')}")
+            if row_id in seen_ids:
+                continue
+            seen_ids.add(row_id)
+            counter[row.get("source", "unknown")] += 1
+    return len(seen_ids), counter
+
+
+def count_field(path: Path, field: str) -> Counter[str]:
+    counter: Counter[str] = Counter()
+    if not path.exists():
+        return counter
+    for row in read_jsonl(path):
+        counter[str(row.get(field, "unknown"))] += 1
+    return counter
+
+
+def incremental_unity_files(root: Path) -> list[dict[str, object]]:
+    raw_dir = root / "raw" / "unity_docs"
+    rows: list[dict[str, object]] = []
+    for path in sorted(raw_dir.glob("unity_docs_incremental_*.jsonl")):
+        if path.name.endswith(("_clean.jsonl", "_rejected.jsonl")):
+            continue
+        clean_path = raw_dir / f"{path.stem}_clean.jsonl"
+        raw_total, _ = count_jsonl(path)
+        clean_total, _ = count_jsonl(clean_path)
+        rows.append(
+            {
+                "file": str(path),
+                "raw_records": raw_total,
+                "clean_records": clean_total,
+                "clean_file": str(clean_path) if clean_path.exists() else "",
+            }
+        )
+    return rows
+
+
 def issue_comment_quality(path: Path) -> dict[str, object]:
     if not path.exists():
         return {
@@ -94,9 +138,11 @@ def main() -> None:
     unity_clean_total, unity_clean_sources = count_jsonl(root / "raw" / "unity_docs" / "unity_docs_clean.jsonl")
     unity_rejected_total, _ = count_jsonl(root / "raw" / "unity_docs" / "unity_docs_rejected.jsonl")
     issue_total, issue_sources = count_jsonl(root / "raw" / "issues" / "issues.jsonl")
+    lua_total, lua_sources = count_jsonl(root / "raw" / "lua_docs" / "lua_docs.jsonl")
     issue_quality = issue_comment_quality(root / "raw" / "issues" / "issues.jsonl")
     processed_root = processed_root_for(root)
-    chunk_total, chunk_sources = count_jsonl(processed_root / "manifest.jsonl")
+    manifest_paths = sorted(processed_root.glob("manifest*.jsonl"))
+    chunk_total, chunk_sources = count_many_jsonl(manifest_paths)
     bundles = bundle_files(root)
 
     report = {
@@ -105,17 +151,23 @@ def main() -> None:
         "unity_pages": unity_total,
         "unity_clean_pages": unity_clean_total,
         "unity_rejected_pages": unity_rejected_total,
+        "unity_incremental_files": incremental_unity_files(root),
         "issues": issue_total,
+        "lua_docs": lua_total,
         "issue_quality": issue_quality,
         "dify_chunks": chunk_total,
         "dify_bundle_files": bundles,
         "unity_sources": dict(unity_sources),
         "unity_clean_sources": dict(unity_clean_sources),
+        "unity_clean_sections": dict(count_field(root / "raw" / "unity_docs" / "unity_docs_clean.jsonl", "section")),
         "issue_sources": dict(issue_sources),
+        "lua_sources": dict(lua_sources),
         "chunk_sources": dict(chunk_sources),
         "acceptance_targets": {
-            "unity_pages": ">= 1500",
+            "unity_pages": ">= 3000 after incremental crawl",
+            "unity_script_reference_pages": ">= 900 after incremental crawl",
             "issues": ">= 200",
+            "lua_docs": ">= 15",
             "effective_dify_chunks": ">= 1000"
         }
     }
