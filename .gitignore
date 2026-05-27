@@ -7,3 +7,6 @@
 /FrontEnd/.env
 /FrontEnd/.env.local
 /FrontEnd/.env.*.local
+/FrontEnd/.node/
+/FrontEnd/.uv-cache/
+/FrontEnd/logs/

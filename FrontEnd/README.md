@@ -1,16 +1,17 @@
 # Open WebUI Frontend
 
-`FrontEnd` uses the official Open WebUI Docker image as the chat frontend for the Unity development assistant. It connects to the Dify RAG app through Dify's OpenAI-compatible endpoint.
+`FrontEnd` contains a local Open WebUI source deployment for frontend customization. The source checkout lives in `OpenWebUI`, and the helper scripts in this directory start the Open WebUI backend service without Docker. The backend serves both the API and the built frontend.
 
 ## Prerequisites
 
-- Docker and Docker Compose.
+- Project-local Node.js in `.node`.
+- A uv-created Python virtual environment in `OpenWebUI/.venv`.
 - A published Dify app.
 - The Dify `OpenAI Compatible Dify App` plugin endpoint, with a URL like `https://dify.example.com/e/<hash>`.
 
 ## Configure
 
-Create a local environment file:
+Create or edit the local environment file:
 
 ```powershell
 Copy-Item .env.example .env
@@ -29,30 +30,58 @@ python -c "import secrets; print(secrets.token_hex(32))"
 
 `FrontEnd/.env` is ignored by Git because it contains secrets.
 
-## Start
+## Local Source Deployment
 
-Validate the Compose file:
-
-```powershell
-docker compose --env-file .env config
-```
-
-Start Open WebUI:
+Start the local source deployment:
 
 ```powershell
-docker compose --env-file .env up -d
+.\start-openwebui-local.ps1
 ```
 
-Check the service:
+Open:
+
+```text
+http://localhost:3000
+```
+
+The startup script:
+
+- Loads Dify settings from `FrontEnd/.env`.
+- Maps `DIFY_OPENAI_BASE_URL` to `OPENAI_API_BASE_URL`.
+- Maps `DIFY_OPENAI_API_KEY` to `OPENAI_API_KEY`.
+- Disables direct user-managed connections.
+- Serves `FrontEnd/OpenWebUI/build` through the backend service.
+- Starts the backend from `FrontEnd/OpenWebUI/backend` using `OpenWebUI/.venv`.
+
+Stop the local source deployment:
 
 ```powershell
-docker compose ps
-docker compose logs --tail=100 open-webui
+.\stop-openwebui-local.ps1
 ```
 
-Open `http://localhost:3000`. The first registered user becomes the administrator.
+Logs are written to:
 
-## Pull Troubleshooting
+```text
+FrontEnd/logs
+```
+
+The local WebUI uses port `3000`. Do not open the Vite development port directly; Open WebUI shows an unsupported frontend-only warning when served that way.
+
+After changing frontend source files under `OpenWebUI/src`, rebuild the static frontend and restart the backend service:
+
+```powershell
+$nodeBin = ".\.node\node-v22.13.1-win-x64"
+$env:PATH = "$nodeBin;$env:PATH"
+Set-Location .\OpenWebUI
+npm run build
+Set-Location ..
+.\stop-openwebui-local.ps1
+.\start-openwebui-local.ps1
+```
+
+## Docker Image Fallback
+
+The previous Docker image setup is still available for quick demos, but it is not the main path for frontend customization.
 
 If Docker reports `short read`, `unexpected EOF`, or a partial GHCR download, retry the image pull first:
 
@@ -99,12 +128,14 @@ Then run a 10-turn conversation and record screenshots or notes for project acce
 
 ## Stop
 
+For the local source deployment:
+
 ```powershell
-docker compose down
+.\stop-openwebui-local.ps1
 ```
 
-To remove local Open WebUI data, use:
+For the Docker fallback:
 
 ```powershell
-docker compose down -v
+docker compose down
 ```
