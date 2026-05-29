@@ -49,7 +49,9 @@ The startup script:
 - Loads Dify settings from `FrontEnd/.env`.
 - Maps `DIFY_OPENAI_BASE_URL` to `OPENAI_API_BASE_URL`.
 - Maps `DIFY_OPENAI_API_KEY` to `OPENAI_API_KEY`.
+- Locks the visible and requested model to `DIFY_MODEL_ID`, defaulting to `unity-rag-assistant`.
 - Disables direct user-managed connections.
+- Disables the Calendar, Automations, Playground, update, release, and external help entry points in the customized UI.
 - Serves `FrontEnd/OpenWebUI/build` through the backend service.
 - Starts the backend from `FrontEnd/OpenWebUI/backend` using `OpenWebUI/.venv`.
 
@@ -100,19 +102,17 @@ OPEN_WEBUI_IMAGE=ghcr.io/open-webui/open-webui:main-slim
 
 The `main-slim` image is smaller, but it may download optional models or assets later on first use. For stable acceptance demos, switch back to a version-pinned tag after the network is reliable.
 
-## Connect Dify
+## Dify Connection
 
-Open WebUI reads `OPENAI_API_BASE_URL` and `OPENAI_API_KEY` from `.env`, mapped from the Dify settings. If the connection does not appear automatically or needs adjustment:
+Open WebUI reads the Dify connection only from `FrontEnd/.env`. The customized frontend hides user-managed OpenAI/Ollama connections, and the backend rejects connection edits while `OPENWEBUI_LOCKED_MODEL_ID` is set by the startup script.
 
-1. Open `Admin Settings`.
-2. Go to `Connections` > `OpenAI`.
-3. Add or edit the OpenAI-compatible connection.
-4. Set the URL to the value of `DIFY_OPENAI_BASE_URL`.
-5. Set the API key to the value of `DIFY_OPENAI_API_KEY`.
-6. Add `DIFY_MODEL_ID` to `Model IDs (Filter)`.
-7. Save the connection.
+The visible model and outgoing chat payload are fixed to `DIFY_MODEL_ID`. Leave it as:
 
-Dify's OpenAI-compatible plugin supports `/chat/completions`, but does not support `/models`. Open WebUI may report a model discovery or verification issue; keep the manual `Model IDs (Filter)` entry and verify chat completion directly.
+```text
+DIFY_MODEL_ID=unity-rag-assistant
+```
+
+Dify's OpenAI-compatible plugin supports `/chat/completions`, but does not support `/models`. The local backend supplies the locked model id to Open WebUI, so no manual `Model IDs Filter` setup is required.
 
 ## Acceptance Test
 
