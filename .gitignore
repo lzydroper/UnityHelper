@@ -11,3 +11,7 @@
 /FrontEnd/.uv-cache/
 /FrontEnd/logs/
 GEMINI.md
+
+# Local python test scripts (may contain secrets)
+/FrontEnd/test_*.py
+temp_test_backup/
