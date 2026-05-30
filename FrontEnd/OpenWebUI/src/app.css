@@ -839,3 +839,48 @@ body {
 #note-content-container .ProseMirror {
 	padding-bottom: 2rem; /* space for the bottom toolbar */
 }
+
+/* Custom UI Enhancements for a Premium Look & Feel */
+textarea, input[type="text"], input[type="password"], input[type="email"], select {
+	transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+	border-color: rgba(99, 102, 241, 0.6) !important;
+}
+
+/* Enhancing navigation and button hover actions with smooth modern accent colors */
+.hover\:bg-gray-50:hover {
+	background-color: rgba(99, 102, 241, 0.06) !important;
+	color: #4f46e5 !important;
+}
+
+.dark .hover\:bg-gray-800:hover {
+	background-color: rgba(99, 102, 241, 0.12) !important;
+	color: #a5b4fc !important;
+}
+
+/* Subtle micro-animations for interactive elements */
+button:active, a:active {
+	transform: scale(0.98);
+	transition: transform 0.1s ease;
+}
+
+/* Sidebar adjustments */
+#sidebar {
+	border-right: 1px solid rgba(229, 231, 235, 0.5);
+}
+.dark #sidebar {
+	border-right: 1px solid rgba(31, 41, 55, 0.5);
+}
+
+/* Beautiful dynamic background styling for chats */
+.chat-input-container {
+	border-radius: 16px;
+	box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+	transition: box-shadow 0.3s ease;
+}
+.chat-input-container:focus-within {
+	box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.1), 0 8px 16px -6px rgba(99, 102, 241, 0.05);
+}
