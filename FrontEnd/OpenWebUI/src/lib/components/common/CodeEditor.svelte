@@ -212,6 +212,7 @@ print("${endTag}")
 		EditorView.updateListener.of((e) => {
 			if (e.docChanged) {
 				_value = e.state.doc.toString();
+				value = _value;
 				onChange(_value);
 			}
 		}),
@@ -318,4 +319,10 @@ print("${endTag}")
 	});
 </script>
 
-<div id="code-textarea-{id}" class="h-full w-full text-sm" />
+<div id="code-textarea-{id}" class="h-full w-full text-sm text-left" />
+
+<style>
+	:global(.cm-editor) {
+		text-align: left !important;
+	}
+</style>

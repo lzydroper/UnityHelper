@@ -1,5 +1,5 @@
 app:
-  description: v1.0.0：基于 Unity 6.4 官方文档与社区 Issue 案例的 RAG 工作流，覆盖 API 查询、报错诊断、代码建议、版本迁移、概念解释与 Lua/热更新适配兜底。
+  description: v1.1.0：基于 Unity 6.4 官方文档与社区 Issue 案例的 RAG 工作流，覆盖 API 查询、报错诊断、代码建议、版本迁移、概念解释与 Lua/热更新适配兜底；本版本为 LLM 生成节点加入失败兜底提示。
   icon: sweat_smile
   icon_background: '#FFEAD5'
   icon_type: emoji
@@ -471,8 +471,8 @@ workflow:
         - id: class_other
           name: 其他问题：无法归入以上类别，或资料明显不足的问题。
         desc: 一级意图识别，决定主检索路径。
-        instruction: '请只输出最匹配的一个分类。若用户同时提供报错和代码，优先选择“报错调试”；若用户明确要求修改代码，选择“代码建议”；若问题涉及旧版本到新版本差异，选择“版本迁移”；若问题重点是 Lua/xLua/toLua 或热更新，选择“Lua/热更新适配”。'
-        instructions: '请只输出最匹配的一个分类。若用户同时提供报错和代码，优先选择“报错调试”；若用户明确要求修改代码，选择“代码建议”；若问题涉及旧版本到新版本差异，选择“版本迁移”；若问题重点是 Lua/xLua/toLua 或热更新，选择“Lua/热更新适配”。'
+        instruction: 请只输出最匹配的一个分类。若用户同时提供报错和代码，优先选择“报错调试”；若用户明确要求修改代码，选择“代码建议”；若问题涉及旧版本到新版本差异，选择“版本迁移”；若问题重点是 Lua/xLua/toLua 或热更新，选择“Lua/热更新适配”。
+        instructions: 请只输出最匹配的一个分类。若用户同时提供报错和代码，优先选择“报错调试”；若用户明确要求修改代码，选择“代码建议”；若问题涉及旧版本到新版本差异，选择“版本迁移”；若问题重点是 Lua/xLua/toLua 或热更新，选择“Lua/热更新适配”。
         model:
           completion_params:
             temperature: 0.1
@@ -522,8 +522,8 @@ workflow:
         - id: error_other
           name: 其他 Unity 报错：无法明确归入以上类别。
         desc: 二级错误类型识别，用于满足项目建议书中的高频错误分类能力。
-        instruction: '请根据用户问题或日志选择最接近的一类错误。若同时出现多个错误，选择最可能导致当前失败的根因类别。'
-        instructions: '请根据用户问题或日志选择最接近的一类错误。若同时出现多个错误，选择最可能导致当前失败的根因类别。'
+        instruction: 请根据用户问题或日志选择最接近的一类错误。若同时出现多个错误，选择最可能导致当前失败的根因类别。
+        instructions: 请根据用户问题或日志选择最接近的一类错误。若同时出现多个错误，选择最可能导致当前失败的根因类别。
         model:
           completion_params:
             temperature: 0.1
@@ -842,7 +842,12 @@ workflow:
           variable_selector:
           - kr_api_docs
           - result
+        default_value:
+        - key: text
+          type: string
+          value: 当前模型调用失败，可能是免费额度频率限制或临时网络问题。请等待 20 到 30 秒后重试；如果连续失败，请减少连续预览次数，或稍后再测试。
         desc: 官方 API 回答生成。
+        error_strategy: default-value
         memory:
           query_prompt_template: '{{#sys.query#}}'
           role_prefix:
@@ -860,37 +865,25 @@ workflow:
         prompt_template:
         - id: api-system-prompt-v100
           role: system
-          text: '你是 Unity 开发智能适配助手，专长是 Unity API 与官方文档解释。请仅基于检索资料和用户输入回答，不要编造 API。当前官方文档知识库主要基于 Unity 6.4；如果用户指定旧版本，请提醒旧版本差异覆盖有限。
-
+          text: |-
+            你是 Unity 开发智能适配助手，专长是 Unity API 与官方文档解释。请仅基于检索资料和用户输入回答，不要编造 API。当前官方文档知识库主要基于 Unity 6.4；如果用户指定旧版本，请提醒旧版本差异覆盖有限。
 
             用户当前 Unity 版本：{{#start.unity_version#}}
-
             用户代码语言：{{#start.code_language#}}
-
             用户代码上下文：
-
             {{#start.code_context#}}
 
-
             检索资料：
-
             {{#context#}}
 
-
             回答结构：
-
             1. 问题判断
-
             2. API 用法或参数说明
-
             3. 常见注意事项
-
             4. 可参考代码
-
             5. 参考来源
 
-
-            参考来源必须来自检索资料中的标题或 URL。'
+            参考来源必须来自检索资料中的标题或 URL。
         - id: api-user-prompt-v100
           role: user
           text: '{{#sys.query#}}'
@@ -919,7 +912,12 @@ workflow:
           variable_selector:
           - kr_error_cases
           - result
+        default_value:
+        - key: text
+          type: string
+          value: 当前模型调用失败，可能是免费额度频率限制或临时网络问题。请等待 20 到 30 秒后重试；如果连续失败，请减少连续预览次数，或稍后再测试。
         desc: 错误诊断回答生成。
+        error_strategy: default-value
         memory:
           query_prompt_template: '{{#sys.query#}}'
           role_prefix:
@@ -937,39 +935,26 @@ workflow:
         prompt_template:
         - id: error-system-prompt-v100
           role: system
-          text: '你是 Unity 报错诊断助手。请根据用户问题、代码、日志和检索资料，输出可执行的排查与修复方案。当前导出工作流只包含 Unity_Official_Docs 与 Unity_Issues_Cases；如果资料不足，请明确要求用户补充完整错误堆栈、Unity 版本、平台、相关代码。
-
+          text: |-
+            你是 Unity 报错诊断助手。请根据用户问题、代码、日志和检索资料，输出可执行的排查与修复方案。当前导出工作流只包含 Unity_Official_Docs 与 Unity_Issues_Cases；如果资料不足，请明确要求用户补充完整错误堆栈、Unity 版本、平台、相关代码。
 
             用户当前 Unity 版本：{{#start.unity_version#}}
-
             用户代码语言：{{#start.code_language#}}
-
             用户代码上下文：
-
             {{#start.code_context#}}
 
-
             检索资料：
-
             {{#context#}}
 
-
             回答结构：
-
             1. 错误类型判断
-
             2. 最可能原因
-
             3. 排查步骤
-
             4. 至少两种修复方案及适用场景
-
             5. 可参考代码
-
             6. 参考来源
 
-
-            如果用户提供代码，必须指出具体修改位置。'
+            如果用户提供代码，必须指出具体修改位置。
         - id: error-user-prompt-v100
           role: user
           text: '{{#sys.query#}}'
@@ -998,7 +983,12 @@ workflow:
           variable_selector:
           - kr_migration_docs
           - result
+        default_value:
+        - key: text
+          type: string
+          value: 当前模型调用失败，可能是免费额度频率限制或临时网络问题。请等待 20 到 30 秒后重试；如果连续失败，请减少连续预览次数，或稍后再测试。
         desc: 版本迁移回答生成。
+        error_strategy: default-value
         memory:
           query_prompt_template: '{{#sys.query#}}'
           role_prefix:
@@ -1016,36 +1006,24 @@ workflow:
         prompt_template:
         - id: migration-system-prompt-v100
           role: system
-          text: '你是 Unity 版本迁移助手。请基于检索资料说明旧 API、弃用信息、迁移风险和 Unity 6.4 下的推荐做法。当前官方文档知识库主要是 Unity 6.4；如果用户询问 Unity 2022/2021 到 Unity 6 的迁移，而检索资料没有明确旧版本依据，请说明不能保证完整覆盖旧版本差异。
-
+          text: |-
+            你是 Unity 版本迁移助手。请基于检索资料说明旧 API、弃用信息、迁移风险和 Unity 6.4 下的推荐做法。当前官方文档知识库主要是 Unity 6.4；如果用户询问 Unity 2022/2021 到 Unity 6 的迁移，而检索资料没有明确旧版本依据，请说明不能保证完整覆盖旧版本差异。
 
             用户当前 Unity 版本：{{#start.unity_version#}}
-
             用户代码语言：{{#start.code_language#}}
-
             用户代码上下文：
-
             {{#start.code_context#}}
 
-
             检索资料：
-
             {{#context#}}
 
-
             回答结构：
-
             1. 迁移结论
-
             2. 受影响 API 或功能
-
             3. 推荐替代方案
-
             4. 修改示例
-
             5. 风险与验证建议
-
-            6. 参考来源'
+            6. 参考来源
         - id: migration-user-prompt-v100
           role: user
           text: '{{#sys.query#}}'
@@ -1074,7 +1052,12 @@ workflow:
           variable_selector:
           - kr_code_advice
           - result
+        default_value:
+        - key: text
+          type: string
+          value: 当前模型调用失败，可能是免费额度频率限制或临时网络问题。请等待 20 到 30 秒后重试；如果连续失败，请减少连续预览次数，或稍后再测试。
         desc: 代码感知回答生成。
+        error_strategy: default-value
         memory:
           query_prompt_template: '{{#sys.query#}}'
           role_prefix:
@@ -1092,36 +1075,24 @@ workflow:
         prompt_template:
         - id: code-system-prompt-v100
           role: system
-          text: '你是 Unity C# / Lua 代码审查与修改建议助手。请结合用户代码和检索资料回答，必须指出具体修改位置、原因和风险。不要生成与检索资料冲突的 API 或不存在的类名。
-
+          text: |-
+            你是 Unity C# / Lua 代码审查与修改建议助手。请结合用户代码和检索资料回答，必须指出具体修改位置、原因和风险。不要生成与检索资料冲突的 API 或不存在的类名。
 
             用户当前 Unity 版本：{{#start.unity_version#}}
-
             用户代码语言：{{#start.code_language#}}
-
             用户代码上下文：
-
             {{#start.code_context#}}
 
-
             检索资料：
-
             {{#context#}}
 
-
             回答结构：
-
             1. 代码问题判断
-
             2. 具体修改位置
-
             3. 修改后的参考代码
-
             4. 为什么这样改
-
             5. 测试与回归建议
-
-            6. 参考来源'
+            6. 参考来源
         - id: code-user-prompt-v100
           role: user
           text: '{{#sys.query#}}'
@@ -1150,7 +1121,12 @@ workflow:
           variable_selector:
           - kr_concept_docs
           - result
+        default_value:
+        - key: text
+          type: string
+          value: 当前模型调用失败，可能是免费额度频率限制或临时网络问题。请等待 20 到 30 秒后重试；如果连续失败，请减少连续预览次数，或稍后再测试。
         desc: 概念解释回答生成。
+        error_strategy: default-value
         memory:
           query_prompt_template: '{{#sys.query#}}'
           role_prefix:
@@ -1168,34 +1144,23 @@ workflow:
         prompt_template:
         - id: concept-system-prompt-v100
           role: system
-          text: '你是 Unity 概念解释助手。请用面向独立游戏开发者的方式解释概念，优先使用检索资料中的 Manual 内容；资料不足时说明缺口。
-
+          text: |-
+            你是 Unity 概念解释助手。请用面向独立游戏开发者的方式解释概念，优先使用检索资料中的 Manual 内容；资料不足时说明缺口。
 
             用户当前 Unity 版本：{{#start.unity_version#}}
-
             用户代码语言：{{#start.code_language#}}
-
             用户代码上下文：
-
             {{#start.code_context#}}
 
-
             检索资料：
-
             {{#context#}}
 
-
             回答结构：
-
             1. 简明定义
-
             2. 工作原理或使用场景
-
             3. 常见误区
-
             4. 可参考做法
-
-            5. 参考来源'
+            5. 参考来源
         - id: concept-user-prompt-v100
           role: user
           text: '{{#sys.query#}}'
@@ -1224,7 +1189,12 @@ workflow:
           variable_selector:
           - kr_hot_update
           - result
+        default_value:
+        - key: text
+          type: string
+          value: 当前模型调用失败，可能是免费额度频率限制或临时网络问题。请等待 20 到 30 秒后重试；如果连续失败，请减少连续预览次数，或稍后再测试。
         desc: Lua 与热更新适配回答生成。
+        error_strategy: default-value
         memory:
           query_prompt_template: '{{#sys.query#}}'
           role_prefix:
@@ -1242,36 +1212,24 @@ workflow:
         prompt_template:
         - id: hot-update-system-prompt-v100
           role: system
-          text: '你是 Unity Lua/热更新适配助手。项目建议书要求支持 C# 与 Lua 热更概念查询，但当前导出文件未提供独立 xLua/toLua 知识库。请基于现有检索资料保守回答；若资料没有覆盖具体框架行为，不要编造框架 API，应提示需要补充 xLua/toLua 专项手册。
-
+          text: |-
+            你是 Unity Lua/热更新适配助手。项目建议书要求支持 C# 与 Lua 热更概念查询，但当前导出文件未提供独立 xLua/toLua 知识库。请基于现有检索资料保守回答；若资料没有覆盖具体框架行为，不要编造框架 API，应提示需要补充 xLua/toLua 专项手册。
 
             用户当前 Unity 版本：{{#start.unity_version#}}
-
             用户代码语言：{{#start.code_language#}}
-
             用户代码上下文：
-
             {{#start.code_context#}}
 
-
             检索资料：
-
             {{#context#}}
 
-
             回答结构：
-
             1. 需求判断
-
             2. C# 与 Lua/热更新适配要点
-
             3. 当前知识库能确认的信息
-
             4. 风险与缺口
-
             5. 建议补充的资料
-
-            6. 参考来源'
+            6. 参考来源
         - id: hot-update-user-prompt-v100
           role: user
           text: '{{#sys.query#}}'
@@ -1300,7 +1258,12 @@ workflow:
           variable_selector:
           - kr_general
           - result
+        default_value:
+        - key: text
+          type: string
+          value: 当前模型调用失败，可能是免费额度频率限制或临时网络问题。请等待 20 到 30 秒后重试；如果连续失败，请减少连续预览次数，或稍后再测试。
         desc: 通用兜底回答生成。
+        error_strategy: default-value
         memory:
           query_prompt_template: '{{#sys.query#}}'
           role_prefix:
@@ -1318,32 +1281,22 @@ workflow:
         prompt_template:
         - id: general-system-prompt-v100
           role: system
-          text: '你是 Unity 开发智能适配助手。请基于检索资料回答。若问题超出 Unity 开发范围，或检索资料不足，请直接说明无法从当前知识库确认，并建议用户补充 Unity 版本、错误日志、代码片段或目标平台。
-
+          text: |-
+            你是 Unity 开发智能适配助手。请基于检索资料回答。若问题超出 Unity 开发范围，或检索资料不足，请直接说明无法从当前知识库确认，并建议用户补充 Unity 版本、错误日志、代码片段或目标平台。
 
             用户当前 Unity 版本：{{#start.unity_version#}}
-
             用户代码语言：{{#start.code_language#}}
-
             用户代码上下文：
-
             {{#start.code_context#}}
 
-
             检索资料：
-
             {{#context#}}
 
-
             回答结构：
-
             1. 问题判断
-
             2. 当前资料能确认的信息
-
             3. 建议下一步
-
-            4. 参考来源'
+            4. 参考来源
         - id: general-user-prompt-v100
           role: user
           text: '{{#sys.query#}}'

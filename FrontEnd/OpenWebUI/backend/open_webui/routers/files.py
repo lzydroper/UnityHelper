@@ -281,6 +281,41 @@ async def upload_file_handler(
             db=db,
         )
 
+        # 同步上传文件到 Dify 并保存关联 ID
+        dify_base_url = os.environ.get('DIFY_OPENAI_BASE_URL', '').rstrip('/')
+        dify_key = os.environ.get('DIFY_OPENAI_API_KEY', '')
+        if dify_base_url and dify_key:
+            try:
+                import httpx
+                async with httpx.AsyncClient() as client:
+                    files_payload = {
+                        'file': (name, contents, file.content_type or 'application/octet-stream')
+                    }
+                    data_payload = {
+                        'user': 'open-webui-user'
+                    }
+                    headers = {
+                        "Authorization": f"Bearer {dify_key}"
+                    }
+                    response = await client.post(
+                        f"{dify_base_url}/files/upload",
+                        files=files_payload,
+                        data=data_payload,
+                        headers=headers,
+                        timeout=60.0
+                    )
+                    if response.status_code in (200, 201):
+                        dify_res = response.json()
+                        dify_file_id = dify_res.get('id')
+                        file_data = file_item.data or {}
+                        file_data['dify_file_id'] = dify_file_id
+                        await Files.update_file_data_by_id(file_item.id, file_data, db=db)
+                        log.info(f"Successfully uploaded file to Dify, id: {dify_file_id}")
+                    else:
+                        log.error(f"Failed to upload file to Dify: HTTP {response.status_code} - {response.text}")
+            except Exception as e:
+                log.exception(f"Error uploading file to Dify: {e}")
+
         if 'channel_id' in file_metadata:
             channel = await Channels.get_channel_by_id_and_user_id(file_metadata['channel_id'], user.id, db=db)
             if channel:

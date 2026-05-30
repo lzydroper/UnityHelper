@@ -58,8 +58,9 @@ if (-not $env:DIFY_MODEL_ID) {
 }
 
 if ($env:DIFY_OPENAI_BASE_URL) {
-    $env:OPENAI_API_BASE_URL = $env:DIFY_OPENAI_BASE_URL
-    $env:OPENAI_API_BASE_URLS = $env:DIFY_OPENAI_BASE_URL
+    # 引导 Open WebUI 后端使用本地全新实现的 dify-adapter 兼容桥接服务
+    $env:OPENAI_API_BASE_URL = "http://localhost:3000/api/v1/dify-adapter"
+    $env:OPENAI_API_BASE_URLS = "http://localhost:3000/api/v1/dify-adapter"
 }
 
 if ($env:DIFY_OPENAI_API_KEY) {
@@ -74,6 +75,7 @@ if ($env:DIFY_MODEL_ID) {
     $env:OPENWEBUI_LOCKED_MODEL_ID = $env:DIFY_MODEL_ID
 }
 
+$env:RAG_EMBEDDING_ENGINE = 'openai'
 $env:ENABLE_OPENAI_API = 'true'
 $env:ENABLE_DIRECT_CONNECTIONS = 'false'
 $env:ENABLE_PERSISTENT_CONFIG = 'false'

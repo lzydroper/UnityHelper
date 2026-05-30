@@ -103,6 +103,36 @@
 
 	const i18n = getContext('i18n');
 
+	import { slide } from 'svelte/transition';
+	import { UNITY_VERSIONS, CODE_LANGUAGES } from '$lib/dify_options';
+	import CodeEditor from '../common/CodeEditor.svelte';
+
+	let codeContext = '';
+	let selectedVersion = UNITY_VERSIONS[0];
+	let selectedLanguage = CODE_LANGUAGES[0];
+	let showCodeContext = false;
+
+	const submitMessage = (promptVal) => {
+		const difyConfig = $config?.dify;
+		const isFirst = Object.keys(history?.messages || {}).length === 0;
+		if (difyConfig?.api_base_url && difyConfig?.api_key && isFirst && (codeContext.trim() || selectedVersion || selectedLanguage)) {
+			let formattedPrompt = `<details>\n<summary>🛠️ 展开 Unity 开发配置与代码上下文 (版本: ${selectedVersion}, 语言: ${selectedLanguage})</summary>\n\n`;
+			formattedPrompt += `### ⚙️ 环境配置\n`;
+			formattedPrompt += `- **Unity 版本**: ${selectedVersion}\n`;
+			formattedPrompt += `- **编程语言**: ${selectedLanguage}\n\n`;
+			
+			if (codeContext.trim()) {
+				formattedPrompt += `### 📝 关联代码上下文\n`;
+				formattedPrompt += `\`\`\`csharp\n${codeContext.trim()}\n\`\`\`\n`;
+			}
+			
+			formattedPrompt += `</details>\n\n${promptVal}`;
+			dispatch('submit', formattedPrompt);
+		} else {
+			dispatch('submit', promptVal);
+		}
+	};
+
 	export let onUpload: Function = (e) => {};
 	export let onChange: Function = () => {};
 
@@ -1238,7 +1268,7 @@
 								document.getElementById('chat-input')?.focus();
 
 								if ($settings?.speechAutoSend ?? false) {
-									dispatch('submit', prompt);
+									submitMessage(prompt);
 								}
 							}}
 						/>
@@ -1247,7 +1277,7 @@
 						class="w-full flex flex-col gap-1.5 {recording ? 'hidden' : ''}"
 						on:submit|preventDefault={() => {
 							// check if selectedModels support image input
-							dispatch('submit', prompt);
+							submitMessage(prompt);
 						}}
 					>
 						<button
@@ -1278,6 +1308,55 @@
 										onDelete={onQueueDelete}
 									/>
 								{/each}
+							</div>
+						{/if}
+
+						{#if Object.keys(history?.messages || {}).length === 0 && $config?.dify?.api_base_url && $config?.dify?.api_key}
+							<div class="p-3 mb-2 rounded-2xl border border-gray-100/20 dark:border-gray-800/30 bg-gray-50/20 dark:bg-gray-900/30 backdrop-blur-md flex flex-col gap-2.5 transition-all duration-300">
+								<div class="flex flex-wrap items-center justify-between gap-3">
+									<div class="flex items-center gap-2">
+										<span class="text-xs font-semibold text-gray-700 dark:text-gray-300">
+											⚙️ Unity 开发配置选项
+										</span>
+									</div>
+									<div class="flex items-center gap-3 flex-wrap text-xs">
+										<!-- Unity Version Dropdown -->
+										<div class="flex items-center gap-1.5">
+											<span class="text-[11px] text-gray-500 dark:text-gray-400">Unity 版本:</span>
+											<select bind:value={selectedVersion} class="px-2 py-0.5 text-xs rounded-lg border border-gray-200/50 dark:border-gray-800/50 bg-white dark:bg-gray-900 text-gray-855 dark:text-gray-100 outline-none focus:ring-1 focus:ring-emerald-500">
+												{#each UNITY_VERSIONS as version}
+													<option value={version}>{version}</option>
+												{/each}
+											</select>
+										</div>
+
+										<!-- Code Language Dropdown -->
+										<div class="flex items-center gap-1.5">
+											<span class="text-[11px] text-gray-500 dark:text-gray-400">编程语言:</span>
+											<select bind:value={selectedLanguage} class="px-2 py-0.5 text-xs rounded-lg border border-gray-200/50 dark:border-gray-800/50 bg-white dark:bg-gray-900 text-gray-855 dark:text-gray-100 outline-none focus:ring-1 focus:ring-emerald-500">
+												{#each CODE_LANGUAGES as lang}
+													<option value={lang}>{lang}</option>
+												{/each}
+											</select>
+										</div>
+
+										<!-- Expand Code Context Toggle Button -->
+										<button type="button" on:click={() => showCodeContext = !showCodeContext} class="px-2.5 py-0.5 text-xs font-medium rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-850 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors flex items-center gap-1">
+											{#if showCodeContext}
+												隐藏上下文 📖
+											{:else}
+												输入上下文 📝
+											{/if}
+										</button>
+									</div>
+								</div>
+
+								<div class="flex flex-col gap-1 transition-all duration-300" class:hidden={!showCodeContext}>
+									<span class="text-[10px] text-gray-400 dark:text-gray-500">代码上下文 / 已有脚本引用 (可选):</span>
+									<div class="w-full rounded-2xl border border-gray-200/50 dark:border-gray-800/50 overflow-auto bg-white dark:bg-gray-900/10 backdrop-blur-md p-1 min-h-[300px] max-h-[600px] resize-y text-left">
+										<CodeEditor bind:value={codeContext} lang="csharp" id="dify-code-context" />
+									</div>
+								</div>
 							</div>
 						{/if}
 
@@ -1546,7 +1625,7 @@
 																if (enterPressed) {
 																	e.preventDefault();
 																	if (prompt !== '' || files.length > 0) {
-																		dispatch('submit', prompt);
+																		submitMessage(prompt);
 																	}
 																}
 															}

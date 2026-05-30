@@ -2276,6 +2276,556 @@ async def generate_messages(
         return response
 
 
+import hashlib
+import uuid
+import time
+import json
+import httpx
+
+DIFY_CONV_MAP = {}
+
+def get_messages_hash(messages):
+    if not messages or len(messages) <= 1:
+        return "empty"
+    serialized = []
+    for msg in messages[:-1]:
+        serialized.append({"role": msg.get("role"), "content": msg.get("content")})
+    return hashlib.sha256(json.dumps(serialized, sort_keys=True).encode("utf-8")).hexdigest()
+
+def save_conv_mapping(messages, assistant_reply, conversation_id):
+    if not conversation_id:
+        return
+    serialized = []
+    for msg in messages:
+        serialized.append({"role": msg.get("role"), "content": msg.get("content")})
+    serialized.append({"role": "assistant", "content": assistant_reply})
+    key = hashlib.sha256(json.dumps(serialized, sort_keys=True).encode("utf-8")).hexdigest()
+    DIFY_CONV_MAP[key] = conversation_id
+
+@app.post('/api/dify/chat-messages')
+async def dify_chat_messages(request: Request, user=Depends(get_verified_user)):
+    try:
+        payload = await request.json()
+    except Exception as e:
+        raise HTTPException(status_code=400, detail="Invalid JSON payload")
+        
+    dify_base_url = os.environ.get('DIFY_OPENAI_BASE_URL', '').rstrip('/')
+    dify_key = os.environ.get('DIFY_OPENAI_API_KEY', '')
+    
+    if not dify_base_url or not dify_key:
+        raise HTTPException(status_code=500, detail="Dify is not configured on the backend")
+        
+    headers = {
+        "Authorization": f"Bearer {dify_key}",
+        "Content-Type": "application/json"
+    }
+    
+    client = httpx.AsyncClient()
+    
+    async def stream_generator():
+        try:
+            async with client.stream(
+                "POST", 
+                f"{dify_base_url}/chat-messages", 
+                json=payload, 
+                headers=headers,
+                timeout=60.0
+            ) as response:
+                if response.status_code != 200:
+                    yield f'data: {{"error": "Dify returned HTTP {response.status_code}"}}\n\n'.encode('utf-8')
+                    return
+                async for chunk in response.aiter_bytes():
+                    yield chunk
+        except Exception as e:
+            yield f'data: {{"error": "{str(e)}"}}\n\n'.encode('utf-8')
+        finally:
+            await client.aclose()
+            
+    return StreamingResponse(
+        stream_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache, no-transform",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
+    )
+
+@app.get('/api/v1/dify-adapter/models')
+async def dify_adapter_models():
+    model_id = (os.environ.get('DIFY_MODEL_ID') or 'unity-rag-assistant').strip()
+    return {
+        "object": "list",
+        "data": [
+            {
+                "id": model_id,
+                "object": "model",
+                "created": int(time.time()),
+                "owned_by": "dify"
+            }
+        ]
+    }
+
+import re
+import copy
+
+def extract_and_clean_dify_payload(messages):
+    cleaned_messages = copy.deepcopy(messages)
+    
+    # 默认值使用 Dify 端认可的合法值
+    inputs = {
+        "unity_version": "Unity 6.4",
+        "code_language": "C#",
+        "code_context": ""
+    }
+    
+    first_user_msg = None
+    for msg in cleaned_messages:
+        if msg.get("role") == "user":
+            first_user_msg = msg
+            break
+            
+    if not first_user_msg:
+        return cleaned_messages, inputs
+        
+    content = first_user_msg.get("content", "")
+    
+    if not isinstance(content, str):
+        return cleaned_messages, inputs
+    
+    if "<details>" in content and "</details>" in content:
+        details_match = re.search(r'<details>(.*?)</details>', content, re.DOTALL)
+        if details_match:
+            details_content = details_match.group(1)
+            
+            version_match = re.search(r'-\s*\*\*Unity\s*版本\*\*:\s*(.*?)\n', details_content)
+            if version_match:
+                inputs["unity_version"] = version_match.group(1).strip()
+            else:
+                version_match_alt = re.search(r'Unity\s*版本:\s*(.*?)\n', details_content)
+                if version_match_alt:
+                    inputs["unity_version"] = version_match_alt.group(1).strip()
+            
+            lang_match = re.search(r'-\s*\*\*编程语言\*\*:\s*(.*?)\n', details_content)
+            if lang_match:
+                inputs["code_language"] = lang_match.group(1).strip()
+            else:
+                lang_match_alt = re.search(r'编程语言:\s*(.*?)\n', details_content)
+                if lang_match_alt:
+                    inputs["code_language"] = lang_match_alt.group(1).strip()
+            
+            code_block_match = re.search(r'```csharp\n(.*?)\n```', details_content, re.DOTALL)
+            if code_block_match:
+                inputs["code_context"] = code_block_match.group(1).strip()
+                
+        cleaned_content = re.sub(r'<details>.*?</details>\s*', '', content, flags=re.DOTALL).strip()
+        if not cleaned_content or cleaned_content == content:
+            parts = content.split("</details>", 1)
+            if len(parts) > 1:
+                cleaned_content = parts[1].strip()
+                
+        first_user_msg["content"] = cleaned_content
+        
+    # === 归一化与安全防错兜底校验 ===
+    allowed_unity_versions = ['Unity 6.4', 'Unity 6', 'Unity 2022 LTS', 'Unity 2021 LTS', '其他/不确定']
+    allowed_code_languages = ['C#', 'Lua/xLua/toLua', 'ShaderLab/HLSL', 'JavaScript', '不确定']
+
+    # 1. 净化与映射 unity_version
+    version_val = inputs.get("unity_version", "").strip()
+    # 映射历史/旧的或前端可能传递的不标准值
+    if version_val == "Unity 6 (默认)" or version_val == "Unity 6.4（默认）" or version_val == "Unity 6.4":
+        version_val = "Unity 6.4"
+    
+    if version_val not in allowed_unity_versions:
+        if "6.4" in version_val:
+            version_val = "Unity 6.4"
+        elif "6" in version_val:
+            version_val = "Unity 6"
+        elif "2022" in version_val:
+            version_val = "Unity 2022 LTS"
+        elif "2021" in version_val:
+            version_val = "Unity 2021 LTS"
+        else:
+            version_val = "Unity 6.4"
+            
+    inputs["unity_version"] = version_val
+
+    # 2. 净化与映射 code_language
+    lang_val = inputs.get("code_language", "").strip()
+    if lang_val == "C# (默认)":
+        lang_val = "C#"
+        
+    if lang_val not in allowed_code_languages:
+        if "c#" in lang_val.lower() or "csharp" in lang_val.lower():
+            lang_val = "C#"
+        elif "lua" in lang_val.lower():
+            lang_val = "Lua/xLua/toLua"
+        elif "shader" in lang_val.lower() or "hlsl" in lang_val.lower():
+            lang_val = "ShaderLab/HLSL"
+        elif "js" in lang_val.lower() or "javascript" in lang_val.lower():
+            lang_val = "JavaScript"
+        elif "不确定" in lang_val or "unknown" in lang_val.lower():
+            lang_val = "不确定"
+        else:
+            lang_val = "C#"
+            
+    inputs["code_language"] = lang_val
+    
+    return cleaned_messages, inputs
+
+@app.post('/api/v1/dify-adapter/chat/completions')
+async def dify_adapter_chat_completions(request: Request):
+    try:
+        body = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid JSON payload")
+        
+    # --- 任务分流拦截器开始 ---
+    metadata = body.get("metadata", {})
+    task = metadata.get("task")
+    messages = body.get("messages", [])
+    
+    # 动态任务特征匹配拦截（补足 upstream 剥离 metadata 导致的上下文丢失）
+    if not task and messages:
+        last_msg_content = messages[-1].get("content", "")
+        if isinstance(last_msg_content, str) and last_msg_content.startswith("### Task:"):
+            # 排除 RAG 任务（主对话流）
+            if "provided context" not in last_msg_content.lower() and "inline citations" not in last_msg_content.lower():
+                if "3-5 word title" in last_msg_content:
+                    task = "title_generation"
+                elif "broad tags" in last_msg_content:
+                    task = "tags_generation"
+                elif "follow-up questions" in last_msg_content or "follow up questions" in last_msg_content:
+                    task = "follow_up_generation"
+                elif "image generation task" in last_msg_content:
+                    task = "image_prompt_generation"
+                elif "autocomplete" in last_msg_content:
+                    task = "autocomplete_generation"
+                elif "query generation" in last_msg_content.lower():
+                    task = "query_generation"
+                else:
+                    # 默认安全归类，防漏拦截
+                    task = "title_generation"
+                    
+    task_base_url = os.environ.get('TASK_MODEL_API_BASE_URL', '').rstrip('/')
+    task_key = os.environ.get('TASK_MODEL_API_KEY', '')
+    task_model = os.environ.get('TASK_MODEL_NAME', '')
+    
+    intercept_tasks_str = os.environ.get('TASK_MODEL_INTERCEPT_TASKS', 'title_generation,follow_up_generation,tags_generation')
+    intercept_tasks = [t.strip() for t in intercept_tasks_str.split(',') if t.strip()]
+    
+    if task_base_url and task_key and task in intercept_tasks:
+        log.info(f"Intercepting task '{task}' and routing to cheap model '{task_model}' at '{task_base_url}'")
+        stream = body.get("stream", False)
+        
+        target_headers = {
+            "Authorization": f"Bearer {task_key}",
+            "Content-Type": "application/json"
+        }
+        target_payload = {
+            "model": task_model,
+            "messages": body.get("messages", []),
+            "stream": stream
+        }
+        for key in ["temperature", "top_p", "max_tokens", "max_completion_tokens", "stop"]:
+            if key in body:
+                target_payload[key] = body[key]
+                
+        client = httpx.AsyncClient()
+        chat_id = f"chatcmpl-{uuid.uuid4()}"
+        created_time = int(time.time())
+        
+        if not stream:
+            try:
+                response = await client.post(
+                    f"{task_base_url}/chat/completions",
+                    json=target_payload,
+                    headers=target_headers,
+                    timeout=60.0
+                )
+                if response.status_code != 200:
+                    raise HTTPException(status_code=response.status_code, detail=f"Target LLM API returned: {response.text}")
+                return response.json()
+            except Exception as e:
+                log.error(f"Error calling cheap task LLM: {e}")
+                raise HTTPException(status_code=500, detail=str(e))
+            finally:
+                await client.aclose()
+        else:
+            async def sse_generator():
+                try:
+                    async with client.stream(
+                        "POST",
+                        f"{task_base_url}/chat/completions",
+                        json=target_payload,
+                        headers=target_headers,
+                        timeout=60.0
+                    ) as response:
+                        if response.status_code != 200:
+                            err_chunk = {
+                                "id": chat_id,
+                                "object": "chat.completion.chunk",
+                                "created": created_time,
+                                "model": task_model,
+                                "choices": [{"index": 0, "delta": {"content": f"Cheap LLM Error {response.status_code}"}, "finish_reason": "stop"}]
+                            }
+                            yield f"data: {json.dumps(err_chunk)}\n\n".encode('utf-8')
+                            yield "data: [DONE]\n\n".encode('utf-8')
+                            return
+                        async for chunk in response.aiter_bytes():
+                            yield chunk
+                except Exception as e:
+                    err_chunk = {
+                        "id": chat_id,
+                        "object": "chat.completion.chunk",
+                        "created": created_time,
+                        "model": task_model,
+                        "choices": [{"index": 0, "delta": {"content": f"\nConnection Error: {str(e)}"}, "finish_reason": "stop"}]
+                    }
+                    yield f"data: {json.dumps(err_chunk)}\n\n".encode('utf-8')
+                    yield "data: [DONE]\n\n".encode('utf-8')
+                finally:
+                    await client.aclose()
+            return StreamingResponse(
+                sse_generator(),
+                media_type="text/event-stream",
+                headers={
+                    "Cache-Control": "no-cache, no-transform",
+                    "Connection": "keep-alive",
+                    "X-Accel-Buffering": "no"
+                }
+            )
+    # --- 任务分流拦截器结束 ---
+        
+    messages = body.get("messages", [])
+    stream = body.get("stream", False)
+    
+    cleaned_messages, dify_inputs = extract_and_clean_dify_payload(messages)
+    
+    dify_base_url = os.environ.get('DIFY_OPENAI_BASE_URL', '').rstrip('/')
+    dify_key = os.environ.get('DIFY_OPENAI_API_KEY', '')
+    
+    if not dify_base_url or not dify_key:
+        raise HTTPException(status_code=500, detail="Dify credentials not configured in environment")
+        
+    conv_key = get_messages_hash(cleaned_messages)
+    conversation_id = DIFY_CONV_MAP.get(conv_key, "")
+    
+    # 提取关联文件并解析其 Dify 文件 ID
+    dify_files = []
+    metadata = body.get("metadata", {})
+    files_list = metadata.get("files", [])
+    if files_list and not task:
+        from open_webui.models.files import Files
+        for f in files_list:
+            file_id = f.get("id")
+            if not file_id:
+                continue
+            try:
+                file_item = await Files.get_file_by_id(file_id)
+                if file_item and file_item.data and file_item.data.get("dify_file_id"):
+                    dify_file_id = file_item.data.get("dify_file_id")
+                    content_type = file_item.meta.get("content_type", "") if file_item.meta else ""
+                    file_type = "image" if "image" in content_type else "document"
+                    dify_files.append({
+                        "type": file_type,
+                        "transfer_method": "local_file",
+                        "upload_file_id": dify_file_id
+                    })
+            except Exception as e:
+                log.error(f"Error resolving dify_file_id for file {file_id}: {e}")
+
+    query_message = cleaned_messages[-1].get("content", "") if cleaned_messages else ""
+    
+    # 拷贝 inputs，并将自定义文件变量注入
+    final_inputs = copy.deepcopy(dify_inputs) if not conversation_id else {}
+    if dify_files and not conversation_id:
+        final_inputs["userinput.files"] = dify_files
+
+    dify_payload = {
+        "inputs": final_inputs,
+        "query": query_message,
+        "response_mode": "streaming" if stream else "blocking",
+        "user": "open-webui-user"
+    }
+    if dify_files and not conversation_id:
+        dify_payload["files"] = dify_files
+
+    if conversation_id:
+        dify_payload["conversation_id"] = conversation_id
+        
+    headers = {
+        "Authorization": f"Bearer {dify_key}",
+        "Content-Type": "application/json"
+    }
+    
+    client = httpx.AsyncClient()
+    chat_id = f"chatcmpl-{uuid.uuid4()}"
+    created_time = int(time.time())
+    model_name = (os.environ.get('DIFY_MODEL_ID') or 'unity-rag-assistant').strip()
+    
+    if not stream:
+        try:
+            response = await client.post(
+                f"{dify_base_url}/chat-messages",
+                json=dify_payload,
+                headers=headers,
+                timeout=60.0
+            )
+            if response.status_code != 200:
+                raise HTTPException(status_code=response.status_code, detail=f"Dify native API returned: {response.text}")
+            
+            res_data = response.json()
+            answer = res_data.get("answer", "")
+            new_conv_id = res_data.get("conversation_id", "")
+            
+            save_conv_mapping(cleaned_messages, answer, new_conv_id)
+            
+            return {
+                "id": chat_id,
+                "object": "chat.completion",
+                "created": created_time,
+                "model": model_name,
+                "choices": [
+                    {
+                        "index": 0,
+                        "message": {
+                            "role": "assistant",
+                            "content": answer
+                        },
+                        "finish_reason": "stop"
+                    }
+                ]
+            }
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+        finally:
+            await client.aclose()
+            
+    async def sse_generator():
+        accumulated_answer = []
+        final_conv_id = ""
+        buffer = ""
+        try:
+            async with client.stream(
+                "POST",
+                f"{dify_base_url}/chat-messages",
+                json=dify_payload,
+                headers=headers,
+                timeout=60.0
+            ) as response:
+                if response.status_code != 200:
+                    err_body = (await response.aread()).decode('utf-8', errors='ignore')
+                    log.error(f"Dify native API returned status {response.status_code}: {err_body}")
+                    err_chunk = {
+                        "id": chat_id,
+                        "object": "chat.completion.chunk",
+                        "created": created_time,
+                        "model": model_name,
+                        "choices": [{"index": 0, "delta": {"content": f"Dify Error {response.status_code}: {err_body}"}, "finish_reason": "stop"}]
+                    }
+                    yield f"data: {json.dumps(err_chunk)}\n\n".encode('utf-8')
+                    yield "data: [DONE]\n\n".encode('utf-8')
+                    return
+                    
+                async for chunk in response.aiter_text():
+                    buffer += chunk
+                    while "\n" in buffer:
+                        line, buffer = buffer.split("\n", 1)
+                        line = line.strip()
+                        if not line or not line.startswith("data:"):
+                            continue
+                        
+                        data_str = line[5:].strip()
+                        if not data_str:
+                            continue
+                        
+                        try:
+                            data = json.loads(data_str)
+                            event = data.get("event")
+                            
+                            if data.get("conversation_id"):
+                                final_conv_id = data.get("conversation_id")
+                                
+                            if event == "error":
+                                err_msg = data.get("message", "Unknown Dify stream error")
+                                log.error(f"Dify returned stream error: {err_msg}")
+                                openai_chunk = {
+                                    "id": chat_id,
+                                    "object": "chat.completion.chunk",
+                                    "created": created_time,
+                                    "model": model_name,
+                                    "choices": [{"index": 0, "delta": {"content": f"\n[Dify 错误]: {err_msg}"}, "finish_reason": "stop"}]
+                                }
+                                yield f"data: {json.dumps(openai_chunk)}\n\n".encode('utf-8')
+                                
+                            if event == "message" and data.get("answer"):
+                                ans = data["answer"]
+                                accumulated_answer.append(ans)
+                                
+                                openai_chunk = {
+                                    "id": chat_id,
+                                    "object": "chat.completion.chunk",
+                                    "created": created_time,
+                                    "model": model_name,
+                                    "choices": [
+                                        {
+                                            "index": 0,
+                                            "delta": {
+                                                "content": ans
+                                            },
+                                            "finish_reason": None
+                                        }
+                                    ]
+                                }
+                                yield f"data: {json.dumps(openai_chunk)}\n\n".encode('utf-8')
+                        except Exception as e:
+                            log.error(f"Error parsing dify chunk: {e}, data: {data_str}")
+                            continue
+                            
+            end_chunk = {
+                "id": chat_id,
+                "object": "chat.completion.chunk",
+                "created": created_time,
+                "model": model_name,
+                "choices": [
+                    {
+                        "index": 0,
+                        "delta": {},
+                        "finish_reason": "stop"
+                    }
+                ]
+            }
+            yield f"data: {json.dumps(end_chunk)}\n\n".encode('utf-8')
+            yield "data: [DONE]\n\n".encode('utf-8')
+            
+            if final_conv_id:
+                save_conv_mapping(cleaned_messages, "".join(accumulated_answer), final_conv_id)
+                
+        except Exception as e:
+            err_chunk = {
+                "id": chat_id,
+                "object": "chat.completion.chunk",
+                "created": created_time,
+                "model": model_name,
+                "choices": [{"index": 0, "delta": {"content": f"\nConnection Error: {str(e)}"}, "finish_reason": "stop"}]
+            }
+            yield f"data: {json.dumps(err_chunk)}\n\n".encode('utf-8')
+            yield "data: [DONE]\n\n".encode('utf-8')
+        finally:
+            await client.aclose()
+            
+    return StreamingResponse(
+        sse_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache, no-transform",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
+    )
+
+
 @app.post('/api/chat/completed')
 async def chat_completed(request: Request, form_data: dict, user=Depends(get_verified_user)):
     """Deprecated: outlet filters now run inline during chat completion.
@@ -2493,6 +3043,10 @@ async def get_app_config(request: Request):
                     'client_id_business': ONEDRIVE_CLIENT_ID_BUSINESS,
                     'sharepoint_url': ONEDRIVE_SHAREPOINT_URL.value,
                     'sharepoint_tenant_id': ONEDRIVE_SHAREPOINT_TENANT_ID.value,
+                },
+                'dify': {
+                    'api_base_url': os.environ.get('DIFY_OPENAI_BASE_URL', ''),
+                    'api_key': os.environ.get('DIFY_OPENAI_API_KEY', ''),
                 },
                 'ui': {
                     'pending_user_overlay_title': app.state.config.PENDING_USER_OVERLAY_TITLE,

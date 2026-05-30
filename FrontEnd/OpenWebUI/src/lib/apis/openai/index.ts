@@ -1,4 +1,6 @@
 import { OPENAI_API_BASE_URL, WEBUI_API_BASE_URL, WEBUI_BASE_URL } from '$lib/constants';
+import { get } from 'svelte/store';
+import { config } from '$lib/stores';
 
 export const getOpenAIConfig = async (token: string = '') => {
 	let error = null;
@@ -332,12 +334,15 @@ export const verifyOpenAIConnection = async (
 
 export const chatCompletion = async (
 	token: string = '',
-	body: object,
+	body: any,
 	url: string = `${WEBUI_BASE_URL}/api`
 ): Promise<[Response | null, AbortController]> => {
 	const controller = new AbortController();
 	let error = null;
 
+
+
+	// Fallback to normal OpenAI compatible API behavior
 	const res = await fetch(`${url}/chat/completions`, {
 		signal: controller.signal,
 		method: 'POST',

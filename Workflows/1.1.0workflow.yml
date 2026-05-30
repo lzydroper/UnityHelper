@@ -423,7 +423,7 @@ workflow:
           variable: code_context
         - label: 当前 Unity 版本（可选）
           options:
-          - Unity 6.4（默认）
+          - Unity 6.4
           - Unity 6
           - Unity 2022 LTS
           - Unity 2021 LTS

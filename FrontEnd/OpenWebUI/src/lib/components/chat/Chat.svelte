@@ -79,7 +79,7 @@
 		updateChatById,
 		updateChatFolderIdById
 	} from '$lib/apis/chats';
-	import { generateOpenAIChatCompletion } from '$lib/apis/openai';
+	import { generateOpenAIChatCompletion, chatCompletion } from '$lib/apis/openai';
 	import { processWeb, processWebSearch, processYoutubeVideo } from '$lib/apis/retrieval';
 	import { getAndUpdateUserLocation, getUserSettings } from '$lib/apis/users';
 	import {
@@ -115,6 +115,8 @@
 	export let chatIdProp = '';
 
 	let loading = true;
+	let currentDifyInputs = null;
+	let difyAbortController = null;
 
 	const eventTarget = new EventTarget();
 	let controlPane: Pane | undefined;
@@ -1955,6 +1957,15 @@
 	const submitHandler = async (userPrompt, { _raw = false } = {}) => {
 		console.log('submitHandler', userPrompt, $chatId);
 
+		let promptStr = '';
+		if (userPrompt && typeof userPrompt === 'object') {
+			promptStr = userPrompt.prompt || '';
+			currentDifyInputs = userPrompt.dify_inputs || null;
+		} else {
+			promptStr = userPrompt || '';
+			currentDifyInputs = null;
+		}
+
 		const _selectedModels = selectedModels.map((modelId) =>
 			$models.map((m) => m.id).includes(modelId) ? modelId : ''
 		);
@@ -1967,7 +1978,7 @@
 			toast.warning($i18n.t('Please connect all required integrations before sending a message'));
 			return;
 		}
-		if (userPrompt === '' && files.length === 0) {
+		if (promptStr === '' && files.length === 0) {
 			toast.error($i18n.t('Please enter a prompt'));
 			return;
 		}
@@ -2009,7 +2020,7 @@
 				const _files = structuredClone(files);
 				chatRequestQueues.update((q) => ({
 					...q,
-					[$chatId]: [...(q[$chatId] ?? []), { id: uuidv4(), prompt: userPrompt, files: _files }]
+					[$chatId]: [...(q[$chatId] ?? []), { id: uuidv4(), prompt: promptStr, files: _files }]
 				}));
 				// Clear input
 				messageInput?.setText('');
@@ -2040,7 +2051,7 @@
 		files = [];
 		messageInput?.setText('');
 
-		await submitPrompt(userPrompt, _files);
+		await submitPrompt(promptStr, _files);
 	};
 
 	const sendMessage = async (
@@ -2112,6 +2123,8 @@
 		}
 		history = history;
 
+
+
 		// New chat — backend generates the chat_id on first request
 		if (!_chatId) {
 			if ($temporaryChatEnabled) {
@@ -2176,6 +2189,8 @@
 			if (chatEventEmitter) clearInterval(chatEventEmitter);
 		}
 	};
+
+
 
 	const getFeatures = () => {
 		let features = {};
@@ -2576,6 +2591,11 @@
 	};
 
 	const stopResponse = async (processQueue = true) => {
+		if (difyAbortController) {
+			difyAbortController.abort('User stopped response');
+			difyAbortController = null;
+		}
+
 		if (taskIds) {
 			if ($chatId) {
 				await stopTasksByChatId(localStorage.token, $chatId).catch((error) => {
@@ -3066,6 +3086,49 @@
 								}}
 							>
 								<div class=" h-full w-full flex flex-col">
+									{#if history?.dify_inputs && (history.dify_inputs.unity_version || history.dify_inputs.code_language || history.dify_inputs.code_context)}
+										{@const inputs = history.dify_inputs}
+										<div class="mx-auto w-full max-w-5xl px-4 pt-4">
+											<div class="p-3.5 rounded-2xl border border-gray-100/30 dark:border-gray-800/30 bg-gray-50/10 dark:bg-gray-900/10 backdrop-blur-md flex flex-col gap-2">
+												<div class="flex items-center justify-between">
+													<div class="flex items-center gap-2">
+														<span class="text-xs font-semibold text-gray-700 dark:text-gray-300">
+															⚙️ 本次对话 Unity 开发上下文配置
+														</span>
+													</div>
+													<div class="flex items-center gap-2">
+														{#if inputs.unity_version}
+															<span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400">
+																{inputs.unity_version}
+															</span>
+														{/if}
+														{#if inputs.code_language}
+															<span class="px-2 py-0.5 text-[10px] font-medium rounded-full bg-indigo-50 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400">
+																{inputs.code_language}
+															</span>
+														{/if}
+													</div>
+												</div>
+												{#if inputs.code_context}
+													<div class="mt-1 flex flex-col gap-1.5">
+														<div class="flex items-center justify-between">
+															<span class="text-[10px] text-gray-400 dark:text-gray-500">代码上下文 / 已有脚本引用:</span>
+															<button type="button" on:click={() => {
+																const el = document.getElementById(`ctx-display-${$chatId}`);
+																if (el) {
+																	el.classList.toggle('hidden');
+																}
+															}} class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium hover:underline">
+																展开/折叠代码 📖
+															</button>
+														</div>
+														<pre id="ctx-display-{$chatId}" class="hidden p-3 text-xs font-mono rounded-xl bg-white dark:bg-gray-950 border border-gray-100/30 dark:border-gray-850/30 text-gray-800 dark:text-gray-200 overflow-x-auto max-h-[300px]"><code>{inputs.code_context}</code></pre>
+													</div>
+												{/if}
+											</div>
+										</div>
+									{/if}
+
 									<Messages
 										bind:this={messagesRef}
 										chatId={$chatId}
