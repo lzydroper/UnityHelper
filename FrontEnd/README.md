@@ -1,11 +1,21 @@
 # Open WebUI Frontend
 
-`FrontEnd` contains a local Open WebUI source deployment for frontend customization. The source checkout lives in `OpenWebUI`, and the helper scripts in this directory start the Open WebUI backend service without Docker. The backend serves both the API and the built frontend.
+`FrontEnd` contains a local Open WebUI source deployment for frontend customization. The source checkout lives in `OpenWebUI`, and the helper scripts in this directory can run the customized app either from local source or from a project-built Docker image. The backend serves both the API and the built frontend.
 
 ## Prerequisites
 
+For local source deployment:
+
 - Project-local Node.js in `.node`.
 - A uv-created Python virtual environment in `OpenWebUI/.venv`.
+
+For Docker image deployment:
+
+- Docker Desktop.
+- A built `unity-open-webui:local` image, or a tar exported by `build-openwebui-docker.ps1 -SaveTar`.
+
+For both deployment paths:
+
 - A published Dify app.
 - The Dify `OpenAI Compatible Dify App` plugin endpoint, with a URL like `https://dify.example.com/e/<hash>`.
 
@@ -81,6 +91,54 @@ Set-Location ..
 .\start-openwebui-local.ps1
 ```
 
+## Local Docker Image Deployment
+
+Use this path when you want to package the customized Open WebUI source into a Docker image for teammates. The build machine needs Docker and network access to download base images and npm/Python dependencies. Teammates who receive the exported tar only need Docker Desktop and `FrontEnd/.env`; they do not need local Node.js, npm dependencies, Python venv, or `npm run build`.
+
+Build the customized image:
+
+```powershell
+.\build-openwebui-docker.ps1 -ImageTag unity-open-webui:local
+```
+
+Build and export a tar for teammates:
+
+```powershell
+.\build-openwebui-docker.ps1 -ImageTag unity-open-webui:local -SaveTar
+```
+
+If the source build fails while downloading Pyodide, PyPI, npm, or Python packages, use the faster overlay mode. It packages the existing local `OpenWebUI/build` and customized backend on top of the official Open WebUI image:
+
+```powershell
+.\build-openwebui-docker.ps1 -ImageTag unity-open-webui:local -SaveTar -OverlayOfficialImage
+```
+
+The default tar is written under:
+
+```text
+FrontEnd/docker-dist
+```
+
+On a teammate machine, import the tar:
+
+```powershell
+docker load -i .\docker-dist\unity-open-webui_local.tar
+```
+
+Start the Docker deployment:
+
+```powershell
+.\start-openwebui-docker.ps1 -ImageTag unity-open-webui:local
+```
+
+Or build and start in one step on a machine that can build images:
+
+```powershell
+.\start-openwebui-docker.ps1 -ImageTag unity-open-webui:local -Build
+```
+
+The Docker deployment uses `docker-compose.local-image.yml`, routes Open WebUI's OpenAI-compatible calls through the in-container Dify adapter at `http://127.0.0.1:8080/api/v1/dify-adapter`, and keeps the visible model locked to `DIFY_MODEL_ID`.
+
 ## Docker Image Fallback
 
 The previous Docker image setup is still available for quick demos, but it is not the main path for frontend customization.
@@ -138,4 +196,10 @@ For the Docker fallback:
 
 ```powershell
 docker compose down
+```
+
+For the local Docker image deployment:
+
+```powershell
+docker compose --env-file .env -f docker-compose.local-image.yml down
 ```

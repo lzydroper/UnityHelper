@@ -1,0 +1,54 @@
+services:
+  open-webui:
+    image: ${LOCAL_OPEN_WEBUI_IMAGE:-unity-open-webui:local}
+    pull_policy: never
+    container_name: unity-open-webui-local
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${OPEN_WEBUI_PORT:-3000}:8080"
+    environment:
+      WEBUI_NAME: ${WEBUI_NAME:-Unity Development Assistant}
+      WEBUI_URL: ${WEBUI_URL:-http://localhost:3000}
+      WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY:-change-me-generate-a-stable-secret}
+      CORS_ALLOW_ORIGIN: ${WEBUI_URL:-http://localhost:3000}
+
+      DIFY_OPENAI_BASE_URL: ${DIFY_OPENAI_BASE_URL:-}
+      DIFY_OPENAI_API_KEY: ${DIFY_OPENAI_API_KEY:-}
+      DIFY_MODEL_ID: ${DIFY_MODEL_ID:-unity-rag-assistant}
+
+      OPENAI_API_BASE_URL: http://127.0.0.1:8080/api/v1/dify-adapter
+      OPENAI_API_BASE_URLS: http://127.0.0.1:8080/api/v1/dify-adapter
+      OPENAI_API_KEY: ${DIFY_OPENAI_API_KEY:-}
+      OPENAI_API_KEYS: ${DIFY_OPENAI_API_KEY:-}
+      DEFAULT_MODELS: ${DIFY_MODEL_ID:-unity-rag-assistant}
+      DEFAULT_PINNED_MODELS: ${DIFY_MODEL_ID:-unity-rag-assistant}
+      TASK_MODEL_EXTERNAL: ${DIFY_MODEL_ID:-unity-rag-assistant}
+      OPENWEBUI_LOCKED_MODEL_ID: ${DIFY_MODEL_ID:-unity-rag-assistant}
+
+      TASK_MODEL_API_BASE_URL: ${TASK_MODEL_API_BASE_URL:-}
+      TASK_MODEL_API_KEY: ${TASK_MODEL_API_KEY:-}
+      TASK_MODEL_NAME: ${TASK_MODEL_NAME:-}
+      TASK_MODEL_INTERCEPT_TASKS: ${TASK_MODEL_INTERCEPT_TASKS:-title_generation,follow_up_generation,tags_generation}
+
+      RAG_EMBEDDING_ENGINE: openai
+      ENABLE_OPENAI_API: "true"
+      ENABLE_DIRECT_CONNECTIONS: "false"
+      ENABLE_PERSISTENT_CONFIG: "false"
+      ENABLE_OLLAMA_API: "false"
+      ENABLE_CALENDAR: "false"
+      ENABLE_AUTOMATIONS: "false"
+      ENABLE_EVALUATION_ARENA_MODELS: "false"
+      ENABLE_COMMUNITY_SHARING: "false"
+      ENABLE_VERSION_UPDATE_CHECK: "false"
+      USER_PERMISSIONS_CHAT_MULTIPLE_MODELS: "false"
+      USER_PERMISSIONS_FEATURES_DIRECT_TOOL_SERVERS: "false"
+      BYPASS_MODEL_ACCESS_CONTROL: "true"
+      WEBUI_BANNERS: "[]"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - unity-open-webui-local-data:/app/backend/data
+
+volumes:
+  unity-open-webui-local-data:
+    name: unity-open-webui-local-data

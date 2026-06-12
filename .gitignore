@@ -9,6 +9,8 @@
 /FrontEnd/.env.*.local
 /FrontEnd/.node/
 /FrontEnd/.uv-cache/
+/FrontEnd/.docker-build/
+/FrontEnd/docker-dist/
 /FrontEnd/logs/
 GEMINI.md
 
